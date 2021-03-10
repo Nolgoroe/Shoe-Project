@@ -79,6 +79,14 @@ public class ReadFolderData : MonoBehaviour
             if (int.TryParse(GameData.Name[0].ToString(), out num))
             {
                 languageVideoClipsURL[num] = www.url;
+
+                if (num == 0)
+                {
+                    UIManager.Instance.playerOfVideos.url = languageVideoClipsURL[0];
+                    UIManager.Instance.playerOfVideos.Play();
+                    UIManager.Instance.playerOfVideos.SetDirectAudioVolume(0, 0);
+                    StartCoroutine(SetVideo());
+                }
             }
             else
             {
@@ -158,4 +166,11 @@ public class ReadFolderData : MonoBehaviour
         }
     }
 
+    IEnumerator SetVideo()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Stopped");
+        UIManager.Instance.playerOfVideos.Stop();
+        UIManager.Instance.playerOfVideos.SetDirectAudioVolume(0,1);
+    }
 }
