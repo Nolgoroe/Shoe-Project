@@ -28,14 +28,14 @@ public class ReadFolderData : MonoBehaviour
         languageVideoClipsURL = new string[4];
         DirectoryInfo dir = new DirectoryInfo(Application.streamingAssetsPath);
 
-        FileInfo[] colorCode = dir.GetFiles("*.txt");
+        FileInfo[] gameData = dir.GetFiles("*.txt");
 
-        foreach (FileInfo f in colorCode)
+        foreach (FileInfo f in gameData)
         {
-            if (f.ToString().Contains("Color"))
+            if (f.ToString().Contains("Game"))
             {
                 print(f.Name);
-                StartCoroutine(LoadColorCode(f));
+                StartCoroutine(LoadGeneralGameData(f));
             }
         }
 
@@ -96,7 +96,7 @@ public class ReadFolderData : MonoBehaviour
             //languageVideoClipsURL.Add(www.url);
         }
     }
-    IEnumerator LoadColorCode(FileInfo GameData)
+    IEnumerator LoadGeneralGameData(FileInfo GameData)
     {
         //1 ignore meata files
         if (GameData.Name.Contains("meta"))
@@ -109,9 +109,32 @@ public class ReadFolderData : MonoBehaviour
             UnityWebRequest www = new UnityWebRequest(wwwTextFilePath);
             yield return www;
 
-            StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/ColorData.txt");
+            StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/Game Data.txt");
 
-            colorCode = reader.ReadToEnd();
+            List<string> lineList = new List<string>();
+
+            while (!reader.EndOfStream)
+            {
+                string inputLine = reader.ReadLine();
+
+                lineList.Add(inputLine);
+            }
+
+            reader.Close();
+
+
+            List<string[]> parsedList = new List<string[]>();
+            for (int i = 0; i < lineList.Count; i++)
+            {
+                string[] temp = lineList[i].Split(',');
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    temp[j] = temp[j].Trim();  //removed the blank spaces
+                }
+                parsedList.Add(temp);
+            }
+
+            colorCode = parsedList[0][0];
 
             Color color = new Color();
             ColorUtility.TryParseHtmlString("#"+colorCode, out color);
@@ -126,10 +149,10 @@ public class ReadFolderData : MonoBehaviour
                 b.colors = colors;
             }
 
+            Timer.Instance.timeToPaint = Convert.ToInt64(parsedList[1][0]);
 
-            reader.Close();
+            IdleCheck.Instance.timeTillReset = Convert.ToInt64(parsedList[2][0]);
         }
-
     }
     IEnumerator LoadImages(FileInfo GameData)
     {

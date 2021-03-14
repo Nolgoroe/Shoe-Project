@@ -882,15 +882,15 @@ namespace PaintIn3D
 
 						paintable.ScaleSize(ref finalWidth, ref finalHeight);
 
-						if (finalTexture == null && existing != ExistingType.Ignore)
-						{
+						//if (finalTexture == null && existing != ExistingType.Ignore)
+						//{
 							finalTexture = oldTexture;
 
 							if (existing == ExistingType.UseAndKeep)
 							{
 								texture = oldTexture;
 							}
-						}
+						//}
 
 						if (string.IsNullOrEmpty(shaderKeyword) == false)
 						{

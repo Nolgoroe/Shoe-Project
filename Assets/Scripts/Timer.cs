@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Timer : MonoBehaviour
 {
     public static Timer Instance;
-    public float timeRemaining = 10;
+    public float timeToPaint = 10;
     public bool timerIsRunning = false;
     public Text timeText;
 
@@ -21,15 +21,15 @@ public class Timer : MonoBehaviour
     {
         if (timerIsRunning)
         {
-            if (timeRemaining > 0)
+            if (timeToPaint > 0)
             {
-                timeRemaining -= Time.deltaTime;
-                DisplayTime(timeRemaining);
+                timeToPaint -= Time.deltaTime;
+                DisplayTime(timeToPaint);
             }
             else
             {
                 Debug.Log("Time has run out!");
-                timeRemaining = 0;
+                timeToPaint = 0;
                 timerIsRunning = false;
                 StartCoroutine(UIManager.Instance.GoLastScreen());
             }

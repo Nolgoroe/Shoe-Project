@@ -17,8 +17,8 @@ namespace PaintIn3D
 	[AddComponentMenu(P3dHelper.ComponentMenuPrefix + "Hit/Hit Screen")]
 	public class P3dHitScreen : P3dConnectablePoints
 	{
-		// This stores extra information for each finger unique to this component
-		class Link
+        // This stores extra information for each finger unique to this component
+        public class Link
 		{
 			public object        Owner;
 			public float         Distance;
@@ -149,12 +149,12 @@ namespace PaintIn3D
 		/// NOTE: The lower you set this, the lower the performance will be.</summary>
 		public float FillSpacing { set { fillSpacing = value; } get { return fillSpacing; } } [SerializeField] private float fillSpacing = 5.0f;
 
-		[System.NonSerialized]
-		private List<Link> links = new List<Link>();
+		[HideInInspector]
+        public List<Link> links = new List<Link>();
 
 #if !USE_LEAN_TOUCH
 		[System.NonSerialized]
-		private P3dInputManager inputManager = new P3dInputManager();
+        public P3dInputManager inputManager = new P3dInputManager();
 #endif
 
 #if USE_LEAN_TOUCH
