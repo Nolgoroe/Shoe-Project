@@ -24,7 +24,7 @@ public class PainterManager : MonoBehaviour
     {
         Instacne = this;
         hitScreenData = GetComponent<P3dHitScreen>();
-        hitScreenData.enabled = false;
+        //hitScreenData.enabled = false;
         allTextures = new List<Texture>();
         for (int i = 1; i <= numOfTextures; i++)
         {
