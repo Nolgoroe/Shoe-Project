@@ -72,7 +72,7 @@ public class UIManager : MonoBehaviour
 
         ColorPickerSimple.Instacne.colorPickedFrontImage.color = PainterManager.Instacne.painter.Color;
 
-        PainterManager.Instacne.hitScreenData.enabled = false;
+        //PainterManager.Instacne.hitScreenData.enabled = false;
     }
 
     public void QuitGame()

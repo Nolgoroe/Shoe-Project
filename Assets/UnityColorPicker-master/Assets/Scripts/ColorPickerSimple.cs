@@ -109,7 +109,7 @@ public class ColorPickerSimple : MonoBehaviour
                         {
                             Selected = true;
                             Debug.Log("IN");
-                            PainterManager.Instacne.hitScreenData.enabled = false;
+                            //PainterManager.Instacne.hitScreenData.enabled = false;
 
                             screenPos.z = 75;
 
@@ -167,7 +167,7 @@ public class ColorPickerSimple : MonoBehaviour
                         {
                             Selected = true;
                             Debug.Log("IN");
-                            PainterManager.Instacne.hitScreenData.enabled = false;
+                            //PainterManager.Instacne.hitScreenData.enabled = false;
                         }
                     }
 
@@ -175,7 +175,7 @@ public class ColorPickerSimple : MonoBehaviour
                 else if (Input.GetMouseButtonUp(0))
                 {
                     Selected = false;
-                    PainterManager.Instacne.hitScreenData.enabled = true;
+                    //PainterManager.Instacne.hitScreenData.enabled = true;
                 }
 
                 if (Selected && Input.GetMouseButton(0))
