@@ -4,6 +4,7 @@ using System.Collections.Generic;
 #if ENABLE_INPUT_SYSTEM
 using NewCode = Unity​Engine.InputSystem.Key;
 #endif
+using System;
 
 namespace PaintIn3D
 {
@@ -61,6 +62,7 @@ namespace PaintIn3D
 			}
 		}
 
+        [Serializable]
 		public class Finger
 		{
 			public int     Index;

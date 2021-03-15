@@ -101,7 +101,7 @@ public class ColorPickerSimple : MonoBehaviour
                 {
                     Vector3 screenPos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100f));
 
-                    int hitCount = Physics2D.RaycastNonAlloc(screenPos, Vector2.zero, HitsBuffer, Mathf.Infinity);
+                    int hitCount = Physics2D.RaycastNonAlloc(screenPos, Vector2.zero, HitsBuffer, 0);
 
                     for (int i = 0; i < hitCount; i++)
                     {
@@ -142,7 +142,7 @@ public class ColorPickerSimple : MonoBehaviour
                                 colorPickedFrontImage.color = Color;
 
                                 ChangeHSVWheel();
-                                Debug.Log(Color);
+
                             }
                         }
                     }

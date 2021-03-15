@@ -8,6 +8,7 @@ using MANAGER = Lean.Touch.LeanTouch;
 #else
 using FINGER = PaintIn3D.P3dInputManager.Finger;
 using MANAGER = PaintIn3D.P3dInputManager;
+using System;
 #endif
 
 namespace PaintIn3D
@@ -18,6 +19,8 @@ namespace PaintIn3D
 	public class P3dHitScreen : P3dConnectablePoints
 	{
         // This stores extra information for each finger unique to this component
+
+            [Serializable]
         public class Link
 		{
 			public object        Owner;
@@ -149,9 +152,12 @@ namespace PaintIn3D
 		/// NOTE: The lower you set this, the lower the performance will be.</summary>
 		public float FillSpacing { set { fillSpacing = value; } get { return fillSpacing; } } [SerializeField] private float fillSpacing = 5.0f;
 
-		[HideInInspector]
+		
         public List<Link> links = new List<Link>();
 
+        public List<FINGER> fings = new List<FINGER>();
+
+        public bool canPaint;
 #if !USE_LEAN_TOUCH
 		[System.NonSerialized]
         public P3dInputManager inputManager = new P3dInputManager();
@@ -199,6 +205,11 @@ namespace PaintIn3D
 			}
 		}
 
+        public void ClearFingers()
+        {
+
+        }
+
 		protected void LateUpdate()
 		{
 #if USE_LEAN_TOUCH
@@ -207,10 +218,23 @@ namespace PaintIn3D
 			inputManager.Update(key);
 
 			var fingers = inputManager.Fingers;
+
+            Debug.Log(Input.touchCount + "/" + fingers.Count);
+            if (Input.touchCount <= 0)
+            {
+                fingers.Clear();
+                canPaint = true;
+            }
+
+            if (Input.touchCount >= 2)
+            {
+                canPaint = false;
+            }
+            fings = fingers;
 #endif
 
-			// Use mouse hover preview?
-			if (showPreview == true)
+            // Use mouse hover preview?
+            if (showPreview == true)
 			{
 				if (P3dInputManager.MouseExists == true && fingers.Count == 0 && P3dInputManager.PointOverGui(P3dInputManager.MousePosition) == false)
 				{
@@ -429,95 +453,98 @@ namespace PaintIn3D
 				var ray = camera.ScreenPointToRay(screenPosition);
 				var hit = default(RaycastHit);
 
-				if (Physics.Raycast(ray, out hit, float.PositiveInfinity, layers) == true)
-				{
-					var finalPosition = hit.point + hit.normal * offset;
-					var finalRotation = Quaternion.identity;
+                if (canPaint)
+                {
+                    if (Physics.Raycast(ray, out hit, float.PositiveInfinity, layers) == true)
+                    {
+                        var finalPosition = hit.point + hit.normal * offset;
+                        var finalRotation = Quaternion.identity;
 
-					switch (rotateTo)
-					{
-						case RotationType.Normal:
-						{
-							var finalNormal = default(Vector3);
+                        switch (rotateTo)
+                        {
+                            case RotationType.Normal:
+                                {
+                                    var finalNormal = default(Vector3);
 
-							switch (normalDirection)
-							{
-								case DirectionType.HitNormal: finalNormal = hit.normal; break;
-								case DirectionType.RayDirection: finalNormal = -ray.direction; break;
-								case DirectionType.CameraDirection: finalNormal = -camera.transform.forward; break;
-							}
+                                    switch (normalDirection)
+                                    {
+                                        case DirectionType.HitNormal: finalNormal = hit.normal; break;
+                                        case DirectionType.RayDirection: finalNormal = -ray.direction; break;
+                                        case DirectionType.CameraDirection: finalNormal = -camera.transform.forward; break;
+                                    }
 
-							var finalUp = Vector3.up;
+                                    var finalUp = Vector3.up;
 
-							switch (normalRelativeTo)
-							{
-								case RelativeType.CameraUp: finalUp = camera.transform.up; break;
-								case RelativeType.DrawAngle:
-								{
-									if (link != null && link.History.Count > 1)
-									{
-										var index        = link.History.Count - 1;
-										var prevPosition = screenPosition - (link.History[index] - link.History[index - 1]);
-										var prevRay      = camera.ScreenPointToRay(prevPosition);
+                                    switch (normalRelativeTo)
+                                    {
+                                        case RelativeType.CameraUp: finalUp = camera.transform.up; break;
+                                        case RelativeType.DrawAngle:
+                                            {
+                                                if (link != null && link.History.Count > 1)
+                                                {
+                                                    var index = link.History.Count - 1;
+                                                    var prevPosition = screenPosition - (link.History[index] - link.History[index - 1]);
+                                                    var prevRay = camera.ScreenPointToRay(prevPosition);
 
-										if (camera.orthographic == true)
-										{
-											var p = ray.GetPoint(0.0f);
+                                                    if (camera.orthographic == true)
+                                                    {
+                                                        var p = ray.GetPoint(0.0f);
 
-											finalUp = Vector3.Cross(ray.GetPoint(1.0f) - p, prevRay.GetPoint(1.0f) - p);
-										}
-										else
-										{
-											finalUp = Vector3.Cross(ray.direction, prevRay.direction);
-										}
-									}
-									else
-									{
-										return;
-									}
-								}
+                                                        finalUp = Vector3.Cross(ray.GetPoint(1.0f) - p, prevRay.GetPoint(1.0f) - p);
+                                                    }
+                                                    else
+                                                    {
+                                                        finalUp = Vector3.Cross(ray.direction, prevRay.direction);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return;
+                                                }
+                                            }
 
-								break;
-							}
+                                            break;
+                                    }
 
-							finalRotation = Quaternion.LookRotation(-finalNormal, finalUp);
-						}
-						break;
-						case RotationType.World: finalRotation = Quaternion.identity; break;
-						case RotationType.ThisRotation: finalRotation = transform.rotation; break;
-						case RotationType.ThisLocalRotation: finalRotation = transform.localRotation; break;
-						case RotationType.CustomRotation: if (customTransform != null) finalRotation = customTransform.rotation; break;
-						case RotationType.CustomLocalRotation: if (customTransform != null) finalRotation = customTransform.localRotation; break;
-					}
+                                    finalRotation = Quaternion.LookRotation(-finalNormal, finalUp);
+                                }
+                                break;
+                            case RotationType.World: finalRotation = Quaternion.identity; break;
+                            case RotationType.ThisRotation: finalRotation = transform.rotation; break;
+                            case RotationType.ThisLocalRotation: finalRotation = transform.localRotation; break;
+                            case RotationType.CustomRotation: if (customTransform != null) finalRotation = customTransform.rotation; break;
+                            case RotationType.CustomLocalRotation: if (customTransform != null) finalRotation = customTransform.localRotation; break;
+                        }
 
-					switch (draw)
-					{
-						case DrawType.PointsIn3D:
-						case DrawType.PointsIn3DFilled:
-						{
-							SubmitPoint(preview, priority, pressure, finalPosition, finalRotation, owner);
-						}
-						break;
+                        switch (draw)
+                        {
+                            case DrawType.PointsIn3D:
+                            case DrawType.PointsIn3DFilled:
+                                {
+                                    SubmitPoint(preview, priority, pressure, finalPosition, finalRotation, owner);
+                                }
+                                break;
 
-						case DrawType.PointsOnUV:
-						{
-							hitCache.InvokeCoord(gameObject, preview, priority, pressure, new P3dHit(hit), finalRotation);
-						}
-						break;
+                            case DrawType.PointsOnUV:
+                                {
+                                    hitCache.InvokeCoord(gameObject, preview, priority, pressure, new P3dHit(hit), finalRotation);
+                                }
+                                break;
 
-						case DrawType.TrianglesIn3D:
-						{
-							hitCache.InvokeTriangle(gameObject, preview, priority, pressure, hit, finalRotation);
-						}
-						break;
-					}
+                            case DrawType.TrianglesIn3D:
+                                {
+                                    hitCache.InvokeTriangle(gameObject, preview, priority, pressure, hit, finalRotation);
+                                }
+                                break;
+                        }
 
-					return;
-				}
-			}
+                        return;
+                    }
+                }
 
-			BreakHits(owner);
-		}
+                BreakHits(owner);
+            }
+        }
 
 		private Link GetLink(object owner)
 		{

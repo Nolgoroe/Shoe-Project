@@ -12,7 +12,7 @@ public class TouchManager : MonoBehaviour
 
     private Vector2 touchPos;
 
-    private float /*rotationY,*/ rotationX;
+    private float rotationY, rotationX;
     private Camera Camera;
 
     public Transform toRotate;
@@ -40,7 +40,13 @@ public class TouchManager : MonoBehaviour
 
     private P3dPaintable paintableObject;
 
+    [HideInInspector]
     public bool canPaint;
+
+    public float tileX, tileY;
+    public float offsetX, offsetY;
+
+    public Touch touch;
     void Start()
     {
         canPaint = false;
@@ -60,16 +66,13 @@ public class TouchManager : MonoBehaviour
             if(Input.touchCount == 0)
             {
                 canPaint = true;
+
+                DisconnectPaint3DTouches();
             }
 
             if (Input.touchCount == 1)
             {
-                if (canPaint)
-                {
-                    PainterManager.Instacne.hitScreenData.enabled = true;
-                }
-
-                Touch touch = Input.GetTouch(0);
+                touch = Input.GetTouch(0);
 
                 if (touch.phase == TouchPhase.Began)
                 {
@@ -122,18 +125,18 @@ public class TouchManager : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Moved)
                 {
-                    if (canPaint)
-                    {
-                        PainterManager.Instacne.hitScreenData.enabled = true;
-                    }
-                    else
-                    {
-                        PainterManager.Instacne.hitScreenData.enabled = false;
-                    }
-
                     clickingTex = false;
                     timerForGetTex = 0;
                     timerForApplyTex = 0;
+
+                    //if (canPaint)
+                    //{
+                    //    PainterManager.Instacne.hitScreenData.enabled = true;
+                    //}
+                    //else
+                    //{
+                    //    PainterManager.Instacne.hitScreenData.enabled = false;
+                    //}
 
                     if (chosenTex && !changingTexNow)
                     {
@@ -150,6 +153,7 @@ public class TouchManager : MonoBehaviour
                         {
                             if (hit.transform.CompareTag("ShoePiece"))
                             {
+
                                 texture.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 1);
                                 texture.transform.localScale = new Vector3(0.2f, 0.2f, 1);
 
@@ -173,8 +177,8 @@ public class TouchManager : MonoBehaviour
                         }
 
                         changingTexNow = false;
-
                     }
+
                     //if (chosenTex)
                     //{
                     //    Vector3 mousePos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100));
@@ -262,7 +266,7 @@ public class TouchManager : MonoBehaviour
             if (Input.touchCount >= 2)
             {
                 canPaint = false;
-                PainterManager.Instacne.hitScreenData.enabled = false;
+                //PainterManager.Instacne.hitScreenData.enabled = false;
                 //PainterManager.Instacne.hitScreenData.Paint()
 
 
@@ -274,19 +278,19 @@ public class TouchManager : MonoBehaviour
                     float deltaX = touchOne.deltaPosition.x;
                     float deltaY = touchOne.deltaPosition.y;
                     rotationX -= deltaX * Time.deltaTime * rotationSpeedModifier;
-                    //rotationY += deltaY * Time.deltaTime * rotationSpeedModifier;
-                    toRotate.transform.eulerAngles = new Vector3(0 , rotationX/*, rotationY*/);
+                    rotationY += deltaY * Time.deltaTime * rotationSpeedModifier;
+                    toRotate.transform.eulerAngles = new Vector3(0 , rotationX, rotationY);
                 }
 
-                Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-                Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
+                //Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+                //Vector2 touchTwoPrevPos = touchTwo.position - touchTwo.deltaPosition;
 
-                float prevMagnitude = (touchOnePrevPos - touchTwoPrevPos).magnitude;
-                float currentMagnitude = (touchOne.position - touchTwo.position).magnitude;
+                //float prevMagnitude = (touchOnePrevPos - touchTwoPrevPos).magnitude;
+                //float currentMagnitude = (touchOne.position - touchTwo.position).magnitude;
 
-                float difference = currentMagnitude - prevMagnitude;
+                //float difference = currentMagnitude - prevMagnitude;
 
-                zoom(difference * 0.01f);
+                //zoom(difference * 0.01f);
             }
 
             //if (Input.GetMouseButton(1))
@@ -299,14 +303,14 @@ public class TouchManager : MonoBehaviour
         }
     }
 
-    private void zoom(float v)
-    {
+    //private void zoom(float v)
+    //{
 
-        Vector3 newxtpos = toZoom.position += toZoom.transform.forward * v * zoomSpeed;
+    //    Vector3 newxtpos = toZoom.position += toZoom.transform.forward * v * zoomSpeed;
 
-        newxtpos.z = Mathf.Clamp(newxtpos.z, -40, -20);
-        toZoom.position = newxtpos;
-    }
+    //    newxtpos.z = Mathf.Clamp(newxtpos.z, -40, -20);
+    //    toZoom.position = newxtpos;
+    //}
 
     public void RefreshMap(P3dPaintable paintableObject)
     {
@@ -320,12 +324,12 @@ public class TouchManager : MonoBehaviour
         {
             //if (timerForApplyTex >= 0.15f)
             //{
-                Transform newDetected = paintableObject.transform;
+            Transform newDetected = paintableObject.transform;
+            Mesh newMesh = newDetected.GetComponent<MeshFilter>().mesh;
 
-
-                //if (newDetected != previouslyDetectedPiece)
-                //{
-                timerForApplyTex = 0;
+            //if (newDetected != previouslyDetectedPiece)
+            //{
+            timerForApplyTex = 0;
 
             //if (previouslyDetectedPiece)
             //{
@@ -338,6 +342,8 @@ public class TouchManager : MonoBehaviour
 
             Renderer newDetectedPieceRenderer = newDetected.transform.GetComponent<Renderer>();
             newDetectedPieceRenderer.materials[0].SetTexture("_BaseMap", texture.texture);
+            //newDetectedPieceRenderer.materials[0].mainTextureScale = new Vector2(tileX, tileY);
+            //newDetectedPieceRenderer.materials[0].mainTextureOffset = new Vector2(offsetX, offsetY);
             previouslyDetectedPiece = newDetected;
 
             RefreshMap(paintableObject);
@@ -383,8 +389,9 @@ public class TouchManager : MonoBehaviour
         for (int i = 0; i < PainterManager.Instacne.hitScreenData.links.Count; i++)
         {
             PainterManager.Instacne.hitScreenData.BreakHits(PainterManager.Instacne.hitScreenData.links[i]);
-            PainterManager.Instacne.hitScreenData.links[i].Clear();
         }
+
+        PainterManager.Instacne.hitScreenData.links.Clear();
     }
 }
 
