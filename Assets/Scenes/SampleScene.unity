@@ -11651,7 +11651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toRotate: {fileID: 4065385985738258710}
   toZoom: {fileID: 963194228}
-  rotationSpeedModifier: 10
+  rotationSpeedModifier: 15
   zoomSpeed: 3
   texture: {fileID: 264648654}
   clickingTex: 0
