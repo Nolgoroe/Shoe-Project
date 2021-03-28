@@ -14,12 +14,18 @@ public class PainterManager : MonoBehaviour
     public Texture textureTex;
 
     public List<Texture> allTextures;
+    public BrushImageDataHolder[] brushes;
     public int numOfTextures;
 
     public GameObject textureButtonPrefab;
     public Transform textureParent;
 
     public P3dHitScreen hitScreenData;
+
+    [HideInInspector]
+    public Color previousColor;
+    [HideInInspector]
+    public bool hasErased;
     void Start()
     {
         Instacne = this;
@@ -35,13 +41,12 @@ public class PainterManager : MonoBehaviour
             TextureHolderScript THS = GO.GetComponent<TextureHolderScript>();
             THS.heldTexture = allTextures[i - 1];
         }
+
+        hasErased = false;
+
+        ThickStrongNoShape();
     }
 
-    //void Update()
-    //{
-    //    painter.Shape = shapeTex;
-    //    painter.Texture = textureTex;
-    //}
 
     public void BrushSizeChange(bool UpSize)
     {
@@ -71,12 +76,6 @@ public class PainterManager : MonoBehaviour
         painter.Texture = tex;
     }
 
-    public void ThickWeakCircle(Texture tex)
-    {
-        painter.Radius = .7f;
-        painter.Hardness = 0.3f;
-        painter.Texture = tex;
-    }
 
     public void ThinStrongNoShape()
     {
@@ -86,18 +85,34 @@ public class PainterManager : MonoBehaviour
 
     }
 
-    public void ThinWeakNoShape()
+    public void Erase()
     {
-        painter.Radius = 0.3f;
-        painter.Hardness = 0.3f;
-        painter.Texture = null;
-    }
-
-    public void ReallyThinWeakNoShape()
-    {
-        painter.Radius = 0.1f;
+        hasErased = true;
+        painter.Radius = .7f;
         painter.Hardness = 1f;
         painter.Texture = null;
+        previousColor = ColorPickerSimple.Instacne.colorPickedFrontImage.color;
+        ColorPickerSimple.Instacne.colorPickedFrontImage.color = Color.white;
+        painter.Color = Color.white;
+    }
 
+    public void ChangeBrushBG(BrushImageDataHolder toChange)
+    {
+        foreach (BrushImageDataHolder BIDH in brushes)
+        {
+            BIDH.SetToWhite();
+        }
+
+        toChange.SetToBlack();
+    }
+    
+    public void ResetColor()
+    {
+        if (hasErased)
+        {
+            hasErased = false;
+            ColorPickerSimple.Instacne.colorPickedFrontImage.color = previousColor;
+            painter.Color = previousColor;
+        }
     }
 }

@@ -215,7 +215,6 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.AfterRewind();
     }
 
-
     public void AnimateSidePanel()
     {
         isOutOfGame = true;
@@ -244,6 +243,8 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator OpenInfoScreen(bool Open)
     {
+        isOutOfGame = true;
+
         if (Open)
         {
             videoAndInfoClosed();
@@ -286,6 +287,7 @@ public class AnimationManager : MonoBehaviour
             yield return null;
         }
     }
+
     private void CloseInfoBar()
     {
         for (int i = 0; i < fadeObjectsInfoClosed.Length; i++)
@@ -327,8 +329,11 @@ public class AnimationManager : MonoBehaviour
             sidePanel.theObject.transform.DOLocalMove(sidePanel.originalPos, sidePanel.timeToAnimate).SetEase(Ease.OutCirc);
         }
     }
+
     public void ChangeVideoLanguage(int index)
     {
+        isOutOfGame = true;
+
         UIManager.Instance.videoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
 
         if (isInfoOpen)
@@ -359,8 +364,6 @@ public class AnimationManager : MonoBehaviour
 
     public void FadeOutVideoBar(bool open)
     {
-        isOutOfGame = true;
-
         if (!open)
         {
             isVideoOpen = true;
@@ -419,6 +422,8 @@ public class AnimationManager : MonoBehaviour
     {
         isOutOfGame = false;
 
+        MoveScreenState(false);
+
         videoAndInfoClosed();
 
         UIManager.Instance.playerOfVideos.Stop();
@@ -473,6 +478,7 @@ public class AnimationManager : MonoBehaviour
             B.interactable = false;
         }
     }
+
     public void EnableLanguageButtons()
     {
         foreach (Button B in languageButtons)
@@ -480,7 +486,6 @@ public class AnimationManager : MonoBehaviour
             B.interactable = true;
         }
     }
-
 
     public void videoAndInfoClosed()
     {

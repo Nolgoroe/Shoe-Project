@@ -219,7 +219,6 @@ namespace PaintIn3D
 
 			var fingers = inputManager.Fingers;
 
-            Debug.Log(Input.touchCount + "/" + fingers.Count);
             if (Input.touchCount <= 0)
             {
                 fingers.Clear();

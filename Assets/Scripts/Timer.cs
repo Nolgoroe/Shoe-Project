@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     public bool timerIsRunning = false;
     public Text timeText;
 
-    public float timeToReset = 5f;
+    public float timeToResetLastScreen = 5f;
     private void Start()
     {
         Instance = this;
@@ -43,9 +43,9 @@ public class Timer : MonoBehaviour
             }
             else
             {
-                if (timeToReset > 0)
+                if (timeToResetLastScreen > 0)
                 {
-                    timeToReset -= Time.deltaTime;
+                    timeToResetLastScreen -= Time.deltaTime;
                 }
                 else
                 {
@@ -61,12 +61,13 @@ public class Timer : MonoBehaviour
 
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-
+        
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    public void TimerToReset()
+    public void FinisedPainting()
     {
-
+        timeToPaint = 0;
+        DisplayTime(-1);
     }
 }

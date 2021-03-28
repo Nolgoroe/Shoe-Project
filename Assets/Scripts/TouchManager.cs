@@ -12,7 +12,7 @@ public class TouchManager : MonoBehaviour
 
     private Vector2 touchPos;
 
-    private float rotationY, rotationX;
+    private float rotationZ, rotationX;
     private Camera Camera;
 
     public Transform toRotate;
@@ -27,7 +27,6 @@ public class TouchManager : MonoBehaviour
     RaycastHit2D[] HitsBuffer = new RaycastHit2D[1];
     public bool clickingTex = false;
     public float timerForGetTex = 0;
-    bool stopCheck = false;
     [HideInInspector]
     public bool chosenTex = false;
     Vector3 screenPos;
@@ -77,28 +76,34 @@ public class TouchManager : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
 
-                    HitsBuffer[0] = new RaycastHit2D();
-                    timerForGetTex = 0;
-                    screenPos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100));
-
-                    int hitCount = Physics2D.RaycastNonAlloc(screenPos, Vector2.zero, HitsBuffer, 0);
-
-                    if(HitsBuffer[0].transform)
-                    {
-                        if (HitsBuffer[0].transform.CompareTag("TexturePrefab"))
-                        {
-                            clickingTex = true;
-                        }
-                    }
                 }
 
                 if(touch.phase == TouchPhase.Stationary)
                 {
+                    HitsBuffer[0] = new RaycastHit2D();
+                    screenPos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100));
+
+                    int hitCount = Physics2D.RaycastNonAlloc(screenPos, Vector2.zero, HitsBuffer, 10);
+
+                    if (HitsBuffer[0].transform)
+                    {
+                        if (HitsBuffer[0].transform.CompareTag("TexturePrefab"))
+                        {
+                            Debug.Log("Begin Tex");
+                            clickingTex = true;
+                        }
+                        else
+                        {
+                            Debug.Log(HitsBuffer[0].transform.name);
+
+                        }
+                    }
+
+                    Debug.Log("IN Stationairy");
                     //PainterManager.Instacne.hitScreenData.enabled = false;
 
-                    if (clickingTex && !stopCheck)
+                    if (clickingTex && !chosenTex)
                     {
-                        stopCheck = false;
                         timerForGetTex += Time.deltaTime;
 
                         if (timerForGetTex > 0.1f)
@@ -106,7 +111,6 @@ public class TouchManager : MonoBehaviour
                             textureScrollRect.enabled = false;
                             chosenTex = true;
                             timerForApplyTex = 0;
-                            stopCheck = true;
                             TextureHolderScript THS = HitsBuffer[0].transform.GetComponent<TextureHolderScript>();
 
                             texture.gameObject.SetActive(true);
@@ -118,7 +122,7 @@ public class TouchManager : MonoBehaviour
 
                             texture.transform.position = mousePos;
                             texture.transform.localScale = new Vector3(1, 1, 1);
-                            //Debug.Log("IN TEX");
+                            Debug.Log("IN TEX");
                         }
                     }
                 }
@@ -137,7 +141,7 @@ public class TouchManager : MonoBehaviour
                     //{
                     //    PainterManager.Instacne.hitScreenData.enabled = false;
                     //}
-
+                    
                     if (chosenTex && !changingTexNow)
                     {
                         changingTexNow = true;
@@ -252,7 +256,6 @@ public class TouchManager : MonoBehaviour
                     timerForApplyTex = 0;
                     timerForGetTex = 0;
                     previouslyDetectedPiece = null;
-                    stopCheck = false;
                     clickingTex = false;
                     chosenTex = false;
                     texture.gameObject.SetActive(false);
@@ -278,8 +281,11 @@ public class TouchManager : MonoBehaviour
                     float deltaX = touchOne.deltaPosition.x;
                     float deltaY = touchOne.deltaPosition.y;
                     rotationX -= deltaX * Time.deltaTime * rotationSpeedModifier;
-                    rotationY += deltaY * Time.deltaTime * rotationSpeedModifier;
-                    toRotate.transform.eulerAngles = new Vector3(0 , rotationX, rotationY);
+                    rotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
+                    rotationZ = Mathf.Clamp(rotationZ, -15, 15);
+                    toRotate.transform.eulerAngles = new Vector3(0 , rotationX, rotationZ);
+
+
                 }
 
                 //Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;

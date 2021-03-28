@@ -1,3 +1,4 @@
 FF00EA, Color
-1000, Time to paint in seconds
-500, Refresh Time in seconds
+90, Time to paint in seconds
+20, Refresh Time in seconds
+15, Timer from last screen to first

@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
     public IEnumerator GoLastScreen()
     {
         yield return new WaitForSeconds(1.1f);
-        shoeGO.transform.rotation = Quaternion.identity;
+        shoeGO.transform.rotation = Quaternion.Euler(4.5f,145,-13.5f);
         shoeGO.transform.position = Vector3.zero;
         TouchManager.isInGame = false;
 
