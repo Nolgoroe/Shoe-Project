@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using System;
+using System.IO;
 
 public class UIManager : MonoBehaviour
 {
@@ -122,7 +123,7 @@ public class UIManager : MonoBehaviour
 
         firstScreenUI.SetActive(false);
         lastScreenUI.SetActive(true);
-
+        sidePanel.SetActive(false);
         isLastScreen = true;
 
         shotPicScreenShot.transform.localPosition = new Vector3(40, 50, 0);
@@ -142,13 +143,19 @@ public class UIManager : MonoBehaviour
         string time = theTime.ToString("HH-mm-ss");
         string datetime = theTime.ToString("yyyy-MM-dd , HH-mm-ss");
 
-        if (!System.IO.File.Exists(screenshotSaveFolderPath + "/Screenshot" + " " + datetime + ".png"))
+        if (!Directory.Exists(screenshotSaveFolderPath))
+        {
+            Directory.CreateDirectory(screenshotSaveFolderPath);
+        }
+
+        if (!File.Exists(screenshotSaveFolderPath + "/Screenshot" + " " + datetime + ".png"))
         {
             ScreenCapture.CaptureScreenshot(screenshotSaveFolderPath + "/Screenshot"+ " " + datetime + ".png");
         }
 
         yield return new WaitForEndOfFrame();
         lastScreenAssetsNoShoe.SetActive(true);
+        sidePanel.SetActive(true);
         shotPicScreenShot.transform.localPosition = new Vector3(40, 180, 0);
         shotPicScreenShot.transform.localScale = Vector3.one;
     }

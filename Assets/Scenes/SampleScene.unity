@@ -1924,7 +1924,7 @@ MonoBehaviour:
   languagesInOrderEHAC:
   - {fileID: 21300000, guid: 7519f99ebb361574bb370c210e533302, type: 3}
   - {fileID: 21300000, guid: 3a5796c8e8afc724899c717ca1cda3ab, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 5c5f9a86e8514cc4f8a48a6a9f5e88fb, type: 3}
   - {fileID: 0}
   thisImage: {fileID: 249186436}
   leftToRightWorldPos: {x: 35, y: -62.5, z: 0}
@@ -2887,7 +2887,7 @@ MonoBehaviour:
   languagesInOrderEHAC:
   - {fileID: 21300000, guid: ca6a58d9a10e5794b9a254f8756821cb, type: 3}
   - {fileID: 21300000, guid: 68d8f4290345f8e478bc33453d476ce0, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 19cd9aab60376f548911f9cd3947100d, type: 3}
   - {fileID: 0}
   thisImage: {fileID: 525239718}
   leftToRightWorldPos: {x: -40, y: -90, z: 0}
@@ -3369,7 +3369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &659218901
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7781,7 +7781,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b4d08bb376c83594cb57eb2556e30213, type: 3}
   - {fileID: 21300000, guid: 716921a92c43dae41bc29180337789de, type: 3}
   isLastScreen: 0
-  screenshotSaveFolderPath: C:\Users\yael\Desktop\this
+  screenshotSaveFolderPath: C:/Users/yael/Desktop/this
   UiLanguages:
   - {fileID: 921277380}
   - {fileID: 387627473}
@@ -9364,7 +9364,7 @@ MonoBehaviour:
   languagesInOrderEHAC:
   - {fileID: 21300000, guid: ce581f7aa3e132d4c802e30921cf9924, type: 3}
   - {fileID: 21300000, guid: 7c386b3b9d8d13c4c99bfe44e585e61d, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: f5073e808da6c464b8e25ea6f4347069, type: 3}
   - {fileID: 0}
   thisImage: {fileID: 1459487486}
   leftToRightWorldPos: {x: -270, y: -260, z: 0}
@@ -9977,7 +9977,7 @@ MonoBehaviour:
   languagesInOrderEHAC:
   - {fileID: 21300000, guid: d623b93d3892aa144b3683bac09c465d, type: 3}
   - {fileID: 21300000, guid: 96d27eaf5fcf4c341a20994c8ddc11d8, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 93667b1009ddee846a32ee65d9488ded, type: 3}
   - {fileID: 0}
   thisImage: {fileID: 1561821992}
   leftToRightWorldPos: {x: -73.5, y: 8.5, z: 0}
@@ -12114,7 +12114,7 @@ MonoBehaviour:
   languagesInOrderEHAC:
   - {fileID: 21300000, guid: 0a6e24d12459e9241b76d57008c05b2e, type: 3}
   - {fileID: 21300000, guid: 0da296ff7f158b54f8c86e83eb114f84, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: cbb43ab9e4a543a499acc207454b5440, type: 3}
   - {fileID: 0}
   thisImage: {fileID: 1893091738}
   leftToRightWorldPos: {x: 11.5, y: 6, z: 0}
@@ -13010,7 +13010,7 @@ MonoBehaviour:
   languagesInOrderEHAC:
   - {fileID: 21300000, guid: ecc93c00f24082a47a41c85f3377f2ac, type: 3}
   - {fileID: 21300000, guid: 83af6ffbb98a21140b4da5daaa298af0, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 3c64062f2ff156e4681873c64574c98d, type: 3}
   - {fileID: 0}
   thisImage: {fileID: 2114346941}
   leftToRightWorldPos: {x: -170, y: -330, z: 0}
