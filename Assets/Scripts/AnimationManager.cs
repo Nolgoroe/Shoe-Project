@@ -17,6 +17,7 @@ public class AnimatedObject
     public Image imageToChange;
     public Sprite originalSprite;
     public Sprite targetSprite;
+    public bool canChangeLanguage;
 }
 
 [Serializable]
@@ -191,6 +192,13 @@ public class AnimationManager : MonoBehaviour
             objectsToFade[i].theObject.DOFade(objectsToFade[i].targetAlpha, objectsToFade[i].timeToAnimate);
         }
 
+        for (int i = 0; i < objectsToAnimate.Length; i++)
+        {
+            if (objectsToAnimate[i].canChangeLanguage)
+            {
+                UIManager.Instance.UiLanguages.Add(objectsToAnimate[i].theObject.GetComponent<UIElementLanguageData>());
+            }
+        }
         UIManager.Instance.AfterAnimation();
     }
 
@@ -277,12 +285,17 @@ public class AnimationManager : MonoBehaviour
             {
                 if (fadeObjectsInfoClosed[i].theObject)
                 {
-                    fadeObjectsInfoClosed[i].theObject.DOFade(fadeObjectsInfoClosed[i].origingalAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
+                    fadeObjectsInfoClosed[i].theObject.DOFade(fadeObjectsInfoClosed[i].targetAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
                 }
                 else
                 {
-                    fadeObjectsInfoClosed[i].theObjectRAW.DOFade(fadeObjectsInfoClosed[i].origingalAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
+                    fadeObjectsInfoClosed[i].theObjectRAW.DOFade(fadeObjectsInfoClosed[i].targetAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
                 }
+            }
+
+            if (isVideoOpen)
+            {
+                CloseMovieBar();
             }
             yield return null;
         }
@@ -294,11 +307,11 @@ public class AnimationManager : MonoBehaviour
         {
             if (fadeObjectsInfoClosed[i].theObject)
             {
-                fadeObjectsInfoClosed[i].theObject.DOFade(fadeObjectsInfoClosed[i].origingalAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
+                fadeObjectsInfoClosed[i].theObject.DOFade(fadeObjectsInfoClosed[i].targetAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
             }
             else
             {
-                fadeObjectsInfoClosed[i].theObjectRAW.DOFade(fadeObjectsInfoClosed[i].origingalAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
+                fadeObjectsInfoClosed[i].theObjectRAW.DOFade(fadeObjectsInfoClosed[i].targetAlpha, fadeObjectsInfoClosed[i].timeToAnimate);
             }
         }
     }
@@ -336,17 +349,17 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.videoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
 
-        if (isInfoOpen)
-        {
-            UIManager.Instance.infoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
-        }
-        else
-        {
-            UIManager.Instance.infoButtons[index].color = new Color(ReadFolderData.Instance.translatedColorCode.r, ReadFolderData.Instance.translatedColorCode.g, ReadFolderData.Instance.translatedColorCode.b, 0);
-        }
+        //if (isInfoOpen)
+        //{
+        //    UIManager.Instance.infoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
+        //}
+        //else
+        //{
+        //    UIManager.Instance.infoButtons[index].color = new Color(ReadFolderData.Instance.translatedColorCode.r, ReadFolderData.Instance.translatedColorCode.g, ReadFolderData.Instance.translatedColorCode.b, 0);
+        //}
 
 
-        UIManager.Instance.ChangeLanguageColors(index);
+        UIManager.Instance.ChangeLanguageColorsVideo(index);
 
         videoAndInfoClosed();
 
@@ -360,6 +373,7 @@ public class AnimationManager : MonoBehaviour
 
         //playerOfVideos.clip = videoLanguages[index];
         FadeOutVideoBar(true);
+        CloseInfoBar();
     }
 
     public void FadeOutVideoBar(bool open)
@@ -397,7 +411,7 @@ public class AnimationManager : MonoBehaviour
                 }
             }
             CloseInfoBar();
-            StartCoroutine(StartVidAfterFadeOut(fadeObjectsMovieClosed[0].timeToAnimate + 0.1f));
+            StartCoroutine(StartVidAfterFadeOut(0f));
         }
     }
 

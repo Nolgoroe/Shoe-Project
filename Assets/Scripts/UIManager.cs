@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class UIManager : MonoBehaviour
 
     public static UIManager Instance;
 
-    public GameObject firstScreenUI, lastScreenUI, sidePanel;
+    public GameObject firstScreenUI, lastScreenUI, lastScreenAssetsNoShoe ,sidePanel;
+    public Transform shotPicScreenShot;
 
     public Transform shoeGO;
 
@@ -29,6 +31,9 @@ public class UIManager : MonoBehaviour
     [HideInInspector]
     public bool isLastScreen;
 
+    public string screenshotSaveFolderPath;
+
+    public List<UIElementLanguageData> UiLanguages;
     private void Start()
     {
         Instance = this;
@@ -83,17 +88,17 @@ public class UIManager : MonoBehaviour
     public void ChangeLocalizationImages(int index)
     {
         infoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
+        SetUILanguage(index);
+        //if (AnimationManager.Instance.isVideoOpen)
+        //{
+        //    videoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
+        //}
+        //else
+        //{
+        //    videoButtons[index].color = new Color(ReadFolderData.Instance.translatedColorCode.r, ReadFolderData.Instance.translatedColorCode.g, ReadFolderData.Instance.translatedColorCode.b,0);
+        //}
 
-        if (AnimationManager.Instance.isVideoOpen)
-        {
-            videoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
-        }
-        else
-        {
-            videoButtons[index].color = new Color(ReadFolderData.Instance.translatedColorCode.r, ReadFolderData.Instance.translatedColorCode.g, ReadFolderData.Instance.translatedColorCode.b,0);
-        }
-
-        ChangeLanguageColors(index);
+        ChangeLanguageColorsInfo(index);
 
         clickedIndexByInfo = index;
 
@@ -118,8 +123,11 @@ public class UIManager : MonoBehaviour
         firstScreenUI.SetActive(false);
         lastScreenUI.SetActive(true);
 
-        yield return new WaitForSeconds(2);
         isLastScreen = true;
+
+        shotPicScreenShot.transform.localPosition = new Vector3(40, 50, 0);
+        shotPicScreenShot.transform.localScale = new Vector3(1.35f, 1.35f, 1.35f);
+
         //for (int i = 0; i < 100000; i++)
         //{
         //    if (!System.IO.File.Exists(Application.streamingAssetsPath + "/Screenshot" + i + ".png"))
@@ -129,44 +137,25 @@ public class UIManager : MonoBehaviour
         //    }
         //}
 
-        string date = System.DateTime.Now.ToString();
-        date = date.Replace("/", "-");
-        date = date.Replace(" ", "_");
-        date = date.Replace(":", "-");
+        DateTime theTime = DateTime.Now;
+        string date = theTime.ToString("yyyy-MM-dd");
+        string time = theTime.ToString("HH-mm-ss");
+        string datetime = theTime.ToString("yyyy-MM-dd , HH-mm-ss");
 
-        if (!System.IO.File.Exists(Application.streamingAssetsPath + "/Screenshot" + " " + date + ".png"))
+        if (!System.IO.File.Exists(screenshotSaveFolderPath + "/Screenshot" + " " + datetime + ".png"))
         {
-            ScreenCapture.CaptureScreenshot(Application.streamingAssetsPath + "/Screenshot"+ " " + date + ".png");
+            ScreenCapture.CaptureScreenshot(screenshotSaveFolderPath + "/Screenshot"+ " " + datetime + ".png");
         }
+
+        yield return new WaitForEndOfFrame();
+        lastScreenAssetsNoShoe.SetActive(true);
+        shotPicScreenShot.transform.localPosition = new Vector3(40, 180, 0);
+        shotPicScreenShot.transform.localScale = Vector3.one;
     }
 
 
-    public void ChangeLanguageColors(int index)
+    public void ChangeLanguageColorsVideo(int index)
     {
-        foreach (Image i in infoButtons)
-        {
-            LanguageButtonInfo childLetterImageData = i.transform.GetComponent<LanguageButtonInfo>();
-            Image childLetterImage = i.transform.GetChild(0).GetComponent<Image>();
-
-            if (i != infoButtons[index])
-            {
-                if (AnimationManager.Instance.isInfoOpen)
-                {
-                    i.color = Color.white;
-                    childLetterImage.sprite = childLetterImageData.blackImage;
-                }
-                else
-                {
-                    i.color = new Color (255,255,255,0);
-                    childLetterImage.sprite = childLetterImageData.blackImage;
-                }
-            }
-            else
-            {
-                childLetterImage.sprite = childLetterImageData.whiteImage;
-            }
-        }
-
         foreach (Image i in videoButtons)
         {
             LanguageButtonInfo childLetterImageData = i.transform.GetComponent<LanguageButtonInfo>();
@@ -188,6 +177,49 @@ public class UIManager : MonoBehaviour
             else
             {
                 childLetterImage.sprite = childLetterImageData.whiteImage;
+            }
+        }
+    }
+    public void ChangeLanguageColorsInfo(int index)
+    {
+        foreach (Image i in infoButtons)
+        {
+            LanguageButtonInfo childLetterImageData = i.transform.GetComponent<LanguageButtonInfo>();
+            Image childLetterImage = i.transform.GetChild(0).GetComponent<Image>();
+
+            if (i != infoButtons[index])
+            {
+                if (AnimationManager.Instance.isInfoOpen)
+                {
+                    i.color = Color.white;
+                    childLetterImage.sprite = childLetterImageData.blackImage;
+                }
+                else
+                {
+                    i.color = new Color(255, 255, 255, 0);
+                    childLetterImage.sprite = childLetterImageData.blackImage;
+                }
+            }
+            else
+            {
+                childLetterImage.sprite = childLetterImageData.whiteImage;
+            }
+        }
+    }
+
+
+    public void SetUILanguage(int index)
+    {
+        foreach (UIElementLanguageData UIL in UiLanguages)
+        {
+            UIL.ChangeLanguageSprite(index);
+        }
+
+        foreach (AnimatedObject AM in AnimationManager.Instance.objectsToAnimate)
+        {
+            if (AM.canChangeLanguage)
+            {
+                AM.targetSprite = AM.theObject.GetComponent<UIElementLanguageData>().languagesInOrderEHAC[index];
             }
         }
     }

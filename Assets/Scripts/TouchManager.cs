@@ -38,6 +38,7 @@ public class TouchManager : MonoBehaviour
     bool changingTexNow = false;
 
     private P3dPaintable paintableObject;
+    private P3dHitScreen hitScreen;
 
     [HideInInspector]
     public bool canPaint;
@@ -46,6 +47,7 @@ public class TouchManager : MonoBehaviour
     public float offsetX, offsetY;
 
     public Touch touch;
+
     void Start()
     {
         canPaint = false;
@@ -64,6 +66,8 @@ public class TouchManager : MonoBehaviour
         {
             if(Input.touchCount == 0)
             {
+                PainterManager.Instacne.hitScreenData.enabled = false;
+
                 canPaint = true;
 
                 DisconnectPaint3DTouches();
@@ -73,12 +77,12 @@ public class TouchManager : MonoBehaviour
             {
                 touch = Input.GetTouch(0);
 
-                if (touch.phase == TouchPhase.Began)
+                if (!PainterManager.Instacne.hitScreenData.enabled)
                 {
-
+                    Invoke("EnableHitScreen", 0.1f);
                 }
 
-                if(touch.phase == TouchPhase.Stationary)
+                if (touch.phase == TouchPhase.Stationary)
                 {
                     HitsBuffer[0] = new RaycastHit2D();
                     screenPos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100));
@@ -247,7 +251,6 @@ public class TouchManager : MonoBehaviour
                     //PainterManager.Instacne.hitScreenData.ClearHitCache();
                     //inputManager.Fingers.Clear();
 
-
                     DisconnectPaint3DTouches();
 
                     StartCoroutine(ChangeTexOnPiece(touch));
@@ -268,6 +271,8 @@ public class TouchManager : MonoBehaviour
 
             if (Input.touchCount >= 2)
             {
+                PainterManager.Instacne.hitScreenData.enabled = false;
+
                 canPaint = false;
                 //PainterManager.Instacne.hitScreenData.enabled = false;
                 //PainterManager.Instacne.hitScreenData.Paint()
@@ -278,14 +283,24 @@ public class TouchManager : MonoBehaviour
 
                 if (touchOne.phase == TouchPhase.Moved)
                 {
-                    float deltaX = touchOne.deltaPosition.x;
-                    float deltaY = touchOne.deltaPosition.y;
-                    rotationX -= deltaX * Time.deltaTime * rotationSpeedModifier;
-                    rotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
-                    rotationZ = Mathf.Clamp(rotationZ, -15, 15);
-                    toRotate.transform.eulerAngles = new Vector3(0 , rotationX, rotationZ);
+                    if (toRotate.transform.eulerAngles.y < 320 && toRotate.transform.eulerAngles.y > 230)
+                    {
+                        float deltaX = touchOne.deltaPosition.x;
+                        float deltaY = touchOne.deltaPosition.y;
+                        rotationX -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        rotationZ -= deltaY * Time.deltaTime * rotationSpeedModifier;
+                        rotationZ = Mathf.Clamp(rotationZ, -13, 13);
+                    }
+                    else
+                    {
+                        float deltaX = touchOne.deltaPosition.x;
+                        float deltaY = touchOne.deltaPosition.y;
+                        rotationX -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        rotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
+                        rotationZ = Mathf.Clamp(rotationZ, -13, 13);
+                    }
 
-
+                    toRotate.transform.eulerAngles = new Vector3(0, rotationX, rotationZ);
                 }
 
                 //Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
@@ -398,6 +413,11 @@ public class TouchManager : MonoBehaviour
         }
 
         PainterManager.Instacne.hitScreenData.links.Clear();
+    }
+
+    private void EnableHitScreen()
+    {
+        PainterManager.Instacne.hitScreenData.enabled = true;
     }
 }
 

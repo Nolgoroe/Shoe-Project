@@ -37,7 +37,7 @@ public class PainterManager : MonoBehaviour
             allTextures.Add(Resources.Load("Textures/texture0" + i) as Texture);
 
             GameObject GO = Instantiate(textureButtonPrefab, textureParent);
-            GO.GetComponent<RawImage>().texture = allTextures[i - 1];
+            GO.GetComponent<RawImage>().texture = Resources.Load("Textures/old/texture0" + i) as Texture;
             TextureHolderScript THS = GO.GetComponent<TextureHolderScript>();
             THS.heldTexture = allTextures[i - 1];
         }
