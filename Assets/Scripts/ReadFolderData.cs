@@ -34,7 +34,7 @@ public class ReadFolderData : MonoBehaviour
         {
             if (f.ToString().Contains("Game"))
             {
-                print(f.Name);
+
                 StartCoroutine(LoadGeneralGameData(f));
             }
         }
@@ -168,7 +168,7 @@ public class ReadFolderData : MonoBehaviour
         else
         {
             string wwwImageFilePath = "file://" + GameData.FullName.ToString();
-            Debug.Log(GameData.Name[0]);
+
 
             UnityWebRequest www = UnityWebRequestTexture.GetTexture(wwwImageFilePath);
             yield return www.SendWebRequest();
@@ -196,7 +196,7 @@ public class ReadFolderData : MonoBehaviour
     IEnumerator SetVideo()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("Stopped");
+
         UIManager.Instance.playerOfVideos.Stop();
         UIManager.Instance.playerOfVideos.SetDirectAudioVolume(0,1);
     }

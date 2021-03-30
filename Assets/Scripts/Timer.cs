@@ -31,7 +31,8 @@ public class Timer : MonoBehaviour
                 Debug.Log("Time has run out!");
                 timeToPaint = 0;
                 timerIsRunning = false;
-                StartCoroutine(UIManager.Instance.GoLastScreen());
+                //StartCoroutine(UIManager.Instance.GoLastScreen());
+                StartCoroutine(AnimationManager.Instance.AnimateThirdToLast());
             }
         }
 

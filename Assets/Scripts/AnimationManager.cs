@@ -13,7 +13,9 @@ public class AnimatedObject
     public Vector3 originalScale;
     public Vector3 newPos;
     public Vector3 newScale;
+    public Vector3 newRotation;
     public float timeToAnimate = 1;
+    public float delatToActivate = 0;
     public Image imageToChange;
     public Sprite originalSprite;
     public Sprite targetSprite;
@@ -43,6 +45,12 @@ public class AnimationManager : MonoBehaviour
     public FadeAnimatedObjects[] fadeObjectsInfoClosed;
     public FadeAnimatedObjects[] fadeObjectsMovieClosed;
     public FadeAnimatedObjects[] fadeObjectsGoToGame;
+
+    public AnimatedObject[] objectsToAnimate2nd3rd;
+    public AnimatedObject[] objectsToAnimate3rd;
+    public AnimatedObject[] objectsToAnimate3rdToLast;
+    public AnimatedObject[] objectToAnimateLast;
+    public AnimatedObject shoeToAnimateLast;
 
     public Button[] languageButtons;
 
@@ -225,6 +233,7 @@ public class AnimationManager : MonoBehaviour
 
     public void AnimateSidePanel()
     {
+        UIManager.Instance.videoBG.raycastTarget = true;
         isOutOfGame = true;
         isInfoOpen = true;
         EnableLanguageButtons();
@@ -380,6 +389,7 @@ public class AnimationManager : MonoBehaviour
     {
         if (!open)
         {
+            UIManager.Instance.videoBG.raycastTarget = true;
             isVideoOpen = true;
 
             EnableLanguageButtons();
@@ -434,6 +444,8 @@ public class AnimationManager : MonoBehaviour
 
     public void CloseSidePanel()
     {
+        UIManager.Instance.videoBG.raycastTarget = false;
+
         isOutOfGame = false;
 
         MoveScreenState(false);
@@ -505,5 +517,76 @@ public class AnimationManager : MonoBehaviour
     {
         isVideoOpen = false;
         isInfoOpen = false;
+    }
+
+    public IEnumerator AnimateSecondToThird()
+    {
+        for (int i = 0; i < objectsToAnimate.Length; i++)
+        {
+            objectsToAnimate2nd3rd[i].theObject.transform.DOLocalMove(objectsToAnimate2nd3rd[i].newPos, objectsToAnimate2nd3rd[i].timeToAnimate).SetEase(Ease.OutCirc);
+            yield return new WaitForSeconds(objectsToAnimate2nd3rd[i].delatToActivate);
+        }
+
+
+        UIManager.Instance.firstScreenUI.SetActive(false);
+
+        StartCoroutine(AnimateThirdScreen());
+        yield return null;
+    }
+
+    public IEnumerator AnimateThirdScreen()
+    {
+        for (int i = 0; i < objectsToAnimate3rd.Length; i++)
+        {
+            objectsToAnimate3rd[i].theObject.transform.DOLocalMove(objectsToAnimate3rd[i].newPos, objectsToAnimate3rd[i].timeToAnimate).SetEase(Ease.OutCirc);
+            yield return new WaitForSeconds(objectsToAnimate3rd[i].delatToActivate);
+        }
+
+        UIManager.Instance.donePaintingButton.interactable = true;
+        yield return null;
+    }
+
+    public IEnumerator AnimateThirdToLast()
+    {
+        //yield return new WaitForSeconds(1.1f);
+
+        for (int i = 0; i < objectsToAnimate3rdToLast.Length; i++)
+        {
+            objectsToAnimate3rdToLast[i].theObject.transform.DOLocalMove(objectsToAnimate3rdToLast[i].newPos, objectsToAnimate3rdToLast[i].timeToAnimate).SetEase(Ease.OutCirc);
+            yield return new WaitForSeconds(objectsToAnimate3rdToLast[i].delatToActivate);
+        }
+
+        StartCoroutine(AnimateLastScreenShoeScreenShot());
+
+        yield return null;
+    }
+
+    public IEnumerator AnimateLastScreenShoeScreenShot()
+    {
+        TouchManager.isInGame = false;
+        UIManager.Instance.isLastScreen = true;
+
+        shoeToAnimateLast.theObject.transform.DOLocalMove(shoeToAnimateLast.newPos, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCirc);
+        shoeToAnimateLast.theObject.transform.DORotate(shoeToAnimateLast.newRotation, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCirc);
+        shoeToAnimateLast.theObject.transform.DOScale(shoeToAnimateLast.newScale, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCirc);
+        yield return new WaitForSeconds(shoeToAnimateLast.delatToActivate);
+
+        UIManager.Instance.firstScreenUI.SetActive(false);
+        //UIManager.Instance.sidePanel.SetActive(false);
+        UIManager.Instance.lastScreenUI.SetActive(true);
+
+        StartCoroutine(UIManager.Instance.TakeScreenShot());
+        yield return null;
+    }
+
+    public IEnumerator AnimatelastScren()
+    {
+        for (int i = 0; i < objectToAnimateLast.Length; i++)
+        {
+            objectToAnimateLast[i].theObject.transform.DOLocalMove(objectToAnimateLast[i].newPos, objectToAnimateLast[i].timeToAnimate).SetEase(Ease.OutCirc);
+            objectToAnimateLast[i].theObject.transform.DOScale(objectToAnimateLast[i].newScale, objectToAnimateLast[i].timeToAnimate).SetEase(Ease.OutCirc);
+            yield return new WaitForSeconds(objectToAnimateLast[i].delatToActivate);
+        }
+        yield return null;
     }
 }

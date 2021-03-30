@@ -10,11 +10,12 @@ using System.IO;
 public class UIManager : MonoBehaviour
 {
     public Button letsStartButton, startDesignButton;
+    public Button donePaintingButton;
 
     public static UIManager Instance;
 
     public GameObject firstScreenUI, lastScreenUI, lastScreenAssetsNoShoe ,sidePanel;
-    public Transform shotPicScreenShot;
+    public RawImage videoBG;
 
     public Transform shoeGO;
 
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
     public Image[] infoButtons, videoButtons;
 
     public Sprite[] whiteLetters, blackLetters;
+
 
     [HideInInspector]
     public bool isLastScreen;
@@ -49,6 +51,7 @@ public class UIManager : MonoBehaviour
         lastScreenUI.SetActive(false);
         firstScreenUI.SetActive(true);
         sidePanel.SetActive(true);
+        videoBG.raycastTarget = false;
     }
 
 
@@ -72,12 +75,12 @@ public class UIManager : MonoBehaviour
 
     public void GoToGame()
     {
-        firstScreenUI.SetActive(false);
         TouchManager.isInGame = true;
         Timer.Instance.timerIsRunning = true;
 
         ColorPickerSimple.Instacne.colorPickedFrontImage.color = PainterManager.Instacne.painter.Color;
 
+        StartCoroutine(AnimationManager.Instance.AnimateSecondToThird());
         //PainterManager.Instacne.hitScreenData.enabled = false;
     }
 
@@ -114,20 +117,16 @@ public class UIManager : MonoBehaviour
             Debug.Log("Backup Image");
         }
     }
-    public IEnumerator GoLastScreen()
+    public IEnumerator TakeScreenShot()
     {
-        yield return new WaitForSeconds(1.1f);
-        shoeGO.transform.rotation = Quaternion.Euler(4.5f,145,-13.5f);
-        shoeGO.transform.position = Vector3.zero;
-        TouchManager.isInGame = false;
+        //yield return new WaitForSeconds(1.1f);
+        //shoeGO.transform.rotation = Quaternion.Euler(4.5f,145,-13.5f);
+        //shoeGO.transform.position = Vector3.zero;
 
-        firstScreenUI.SetActive(false);
-        lastScreenUI.SetActive(true);
-        sidePanel.SetActive(false);
-        isLastScreen = true;
+        //shotPicScreenShot.transform.localPosition = new Vector3(40, 50, 0);
+        //shotPicScreenShot.transform.localScale = new Vector3(1.35f, 1.35f, 1.35f);
 
-        shotPicScreenShot.transform.localPosition = new Vector3(40, 50, 0);
-        shotPicScreenShot.transform.localScale = new Vector3(1.35f, 1.35f, 1.35f);
+
 
         //for (int i = 0; i < 100000; i++)
         //{
@@ -153,11 +152,13 @@ public class UIManager : MonoBehaviour
             ScreenCapture.CaptureScreenshot(screenshotSaveFolderPath + "/Screenshot"+ " " + datetime + ".png");
         }
 
-        yield return new WaitForEndOfFrame();
-        lastScreenAssetsNoShoe.SetActive(true);
-        sidePanel.SetActive(true);
-        shotPicScreenShot.transform.localPosition = new Vector3(40, 180, 0);
-        shotPicScreenShot.transform.localScale = Vector3.one;
+        yield return null;
+        StartCoroutine(AnimationManager.Instance.AnimatelastScren());
+        //shotPicScreenShot.transform.localPosition = new Vector3(40, 180, 0);
+        //shotPicScreenShot.transform.localScale = Vector3.one;
+
+        //lastScreenAssetsNoShoe.SetActive(true);
+        //sidePanel.SetActive(true);
     }
 
 

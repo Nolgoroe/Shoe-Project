@@ -24,7 +24,7 @@ public class TouchManager : MonoBehaviour
 
     public RawImage texture;
 
-    RaycastHit2D[] HitsBuffer = new RaycastHit2D[1];
+    //RaycastHit2D[] HitsBuffer = new RaycastHit2D[1];
     public bool clickingTex = false;
     public float timerForGetTex = 0;
     [HideInInspector]
@@ -48,6 +48,7 @@ public class TouchManager : MonoBehaviour
 
     public Touch touch;
 
+    public TextureHolderScript currentTHS;
     void Start()
     {
         canPaint = false;
@@ -68,8 +69,16 @@ public class TouchManager : MonoBehaviour
             {
                 PainterManager.Instacne.hitScreenData.enabled = false;
 
+                textureScrollRect.enabled = true;
+                timerForApplyTex = 0;
+                timerForGetTex = 0;
+                previouslyDetectedPiece = null;
+                clickingTex = false;
+                chosenTex = false;
+                texture.gameObject.SetActive(false);
+                paintableObject = null;
                 canPaint = true;
-
+                currentTHS = null;
                 DisconnectPaint3DTouches();
             }
 
@@ -84,26 +93,22 @@ public class TouchManager : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Stationary)
                 {
-                    HitsBuffer[0] = new RaycastHit2D();
-                    screenPos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100));
+                    //HitsBuffer[0] = new RaycastHit2D();
+                    //screenPos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100));
 
-                    int hitCount = Physics2D.RaycastNonAlloc(screenPos, Vector2.zero, HitsBuffer, 10);
+                    //int hitCount = Physics2D.RaycastNonAlloc(screenPos, Vector2.zero, HitsBuffer, 100);
 
-                    if (HitsBuffer[0].transform)
-                    {
-                        if (HitsBuffer[0].transform.CompareTag("TexturePrefab"))
-                        {
-                            Debug.Log("Begin Tex");
-                            clickingTex = true;
-                        }
-                        else
-                        {
-                            Debug.Log(HitsBuffer[0].transform.name);
+                    //if (HitsBuffer[0].transform)
+                    //{
+                    //    Debug.Log("Dammit");
+                    //    if (HitsBuffer[0].transform.CompareTag("TexturePrefab"))
+                    //    {
 
-                        }
-                    }
+                            //clickingTex = true;
+                    //    }
+                    //}
 
-                    Debug.Log("IN Stationairy");
+
                     //PainterManager.Instacne.hitScreenData.enabled = false;
 
                     if (clickingTex && !chosenTex)
@@ -115,7 +120,7 @@ public class TouchManager : MonoBehaviour
                             textureScrollRect.enabled = false;
                             chosenTex = true;
                             timerForApplyTex = 0;
-                            TextureHolderScript THS = HitsBuffer[0].transform.GetComponent<TextureHolderScript>();
+                            TextureHolderScript THS = currentTHS.transform.GetComponent<TextureHolderScript>();
 
                             texture.gameObject.SetActive(true);
                             texture.texture = THS.heldTexture;
@@ -126,14 +131,13 @@ public class TouchManager : MonoBehaviour
 
                             texture.transform.position = mousePos;
                             texture.transform.localScale = new Vector3(1, 1, 1);
-                            Debug.Log("IN TEX");
+
                         }
                     }
                 }
 
                 if (touch.phase == TouchPhase.Moved)
                 {
-                    clickingTex = false;
                     timerForGetTex = 0;
                     timerForApplyTex = 0;
 
@@ -255,15 +259,6 @@ public class TouchManager : MonoBehaviour
 
                     StartCoroutine(ChangeTexOnPiece(touch));
 
-                    textureScrollRect.enabled = true;
-                    timerForApplyTex = 0;
-                    timerForGetTex = 0;
-                    previouslyDetectedPiece = null;
-                    clickingTex = false;
-                    chosenTex = false;
-                    texture.gameObject.SetActive(false);
-                    paintableObject = null;
-                    canPaint = true;
 
                 }
 
