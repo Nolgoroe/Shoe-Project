@@ -221,6 +221,7 @@ public class UIManager : MonoBehaviour
         foreach (UIElementLanguageData UIL in UiLanguages)
         {
             UIL.ChangeLanguageSprite(index);
+            //UIL.transform.localPosition = Vector3.zero;
         }
 
         foreach (AnimatedObject AM in AnimationManager.Instance.objectsToAnimate)

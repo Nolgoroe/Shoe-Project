@@ -521,7 +521,7 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator AnimateSecondToThird()
     {
-        for (int i = 0; i < objectsToAnimate.Length; i++)
+        for (int i = 0; i < objectsToAnimate2nd3rd.Length; i++)
         {
             objectsToAnimate2nd3rd[i].theObject.transform.DOLocalMove(objectsToAnimate2nd3rd[i].newPos, objectsToAnimate2nd3rd[i].timeToAnimate).SetEase(Ease.OutCirc);
             yield return new WaitForSeconds(objectsToAnimate2nd3rd[i].delatToActivate);
@@ -556,6 +556,7 @@ public class AnimationManager : MonoBehaviour
             yield return new WaitForSeconds(objectsToAnimate3rdToLast[i].delatToActivate);
         }
 
+        //UIManager.Instance.sidePanel.SetActive(false);
         StartCoroutine(AnimateLastScreenShoeScreenShot());
 
         yield return null;
@@ -563,19 +564,20 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator AnimateLastScreenShoeScreenShot()
     {
+
         TouchManager.isInGame = false;
         UIManager.Instance.isLastScreen = true;
 
         shoeToAnimateLast.theObject.transform.DOLocalMove(shoeToAnimateLast.newPos, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCirc);
-        shoeToAnimateLast.theObject.transform.DORotate(shoeToAnimateLast.newRotation, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCirc);
+        shoeToAnimateLast.theObject.transform.DORotate(shoeToAnimateLast.newRotation, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCubic);
         shoeToAnimateLast.theObject.transform.DOScale(shoeToAnimateLast.newScale, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCirc);
         yield return new WaitForSeconds(shoeToAnimateLast.delatToActivate);
 
         UIManager.Instance.firstScreenUI.SetActive(false);
-        //UIManager.Instance.sidePanel.SetActive(false);
         UIManager.Instance.lastScreenUI.SetActive(true);
 
         StartCoroutine(UIManager.Instance.TakeScreenShot());
+        //UIManager.Instance.sidePanel.SetActive(true);
         yield return null;
     }
 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 589e2f8c94bef724ba459afada19c20a
+guid: d1bf297055c87d543b3792ad5a003c4a
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
@@ -14,10 +14,20 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: MAT_Sneakers2
     second: {fileID: 2100000, guid: 9ab31e2f06e9353418c5a642d712ffba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MAT_Sneakers_Inside
+    second: {fileID: 2100000, guid: bf89f6b0d8efa8c4db847c0ff104da2a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Metal
+    second: {fileID: 2100000, guid: 5e85c842124eb584c95c2be554ef1315, type: 2}
   materials:
     materialImportMode: 1
-    materialName: 0
-    materialSearch: 1
+    materialName: 1
+    materialSearch: 2
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4

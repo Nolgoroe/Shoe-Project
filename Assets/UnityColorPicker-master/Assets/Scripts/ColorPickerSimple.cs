@@ -215,7 +215,6 @@ public class ColorPickerSimple : MonoBehaviour
                                 Selector.transform.position = mousePos;
                                 Color = Data[y * Width + x];
 
-
                                 Color = new Color(Color.r, Color.g, Color.b, 1);
 
                                 colorPickedFrontImage.color = Color;
