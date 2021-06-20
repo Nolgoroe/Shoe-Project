@@ -79,6 +79,8 @@ public class UIManager : MonoBehaviour
         Timer.Instance.timerIsRunning = true;
 
         ColorPickerSimple.Instacne.colorPickedFrontImage.color = PainterManager.Instacne.painter.Color;
+        ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color", ColorPickerSimple.Instacne.colorPickedFrontImage.color);
+        ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color2", Color.black);
 
         StartCoroutine(AnimationManager.Instance.AnimateSecondToThird());
         //PainterManager.Instacne.hitScreenData.enabled = false;
