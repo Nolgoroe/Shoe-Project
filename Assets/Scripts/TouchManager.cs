@@ -7,6 +7,7 @@ using PaintIn3D;
 
 public class TouchManager : MonoBehaviour
 {
+
     public static TouchManager Instance;
     //private Touch touch;
 
@@ -314,13 +315,11 @@ public class TouchManager : MonoBehaviour
         if (paintableObject)
         {
             Transform newDetected = paintableObject.transform;
-            Mesh newMesh = newDetected.GetComponent<MeshFilter>().mesh;
-            HelpData hd = newDetected.GetComponent<HelpData>();
-            Renderer meshRendere = newDetected.GetComponent<MeshRenderer>();
+            //HelpData hd = newDetected.GetComponent<HelpData>();
 
             timerForApplyTex = 0;
 
-            meshRendere.material = hd.normalMat;
+            //meshRendere.material = hd.normalMat;
             //paintableTexture.Texture = meshRendere.material.GetTexture("_BaseMap");
 
             Renderer newDetectedPieceRenderer = newDetected.transform.GetComponent<Renderer>();
@@ -350,13 +349,39 @@ public class TouchManager : MonoBehaviour
 
             timerForApplyTex = 0;
 
-            meshRendere.material = hd.gradMat;
+            Gradient gradient = new Gradient();
+
+            GradientColorKey[] ColorKey = { new GradientColorKey(ColorPickerSimple.Instacne.colorPickedFrontImage.color, 0), new GradientColorKey(ColorPickerSimple.Instacne.colorPickedBackImage.color, 1) };
+            GradientAlphaKey[] AlphaKey = { new GradientAlphaKey(1, 1), new GradientAlphaKey(1, 1) };
+
+            gradient.SetKeys(ColorKey, AlphaKey);
+
+            float yStep = 1f / 1024f;
+
+            var texture = new Texture2D(1024, 1024);
+
+            for (int y = 0; y < 1024; y++)
+            {
+                Color color = gradient.Evaluate(y * yStep);
+
+                for (int x = 0; x < 1024; x++)
+                {
+                    texture.SetPixel(Mathf.CeilToInt(x), Mathf.CeilToInt(y), color);
+                }
+            }
+
+            texture.Apply();
+
+            // connect texture to material of GameObject this script is attached to
+            //meshRendere.material.mainTexture = texture;
+
+            //meshRendere.material = hd.gradMat;
             //paintableTexture.Texture = paintMapGrad;
 
-            meshRendere.material.SetColor("_Color", ColorPickerSimple.Instacne.colorPickedFrontImage.color);
-            meshRendere.material.SetColor("_Color2", ColorPickerSimple.Instacne.colorPickedBackImage.color);
+            //meshRendere.material.SetColor("_Color", ColorPickerSimple.Instacne.colorPickedFrontImage.color);
+            //meshRendere.material.SetColor("_Color2", ColorPickerSimple.Instacne.colorPickedBackImage.color);
 
-            //meshRendere.materials[0].SetTexture("_BaseMap", paintMapGrad);
+            meshRendere.materials[0].SetTexture("_BaseMap", texture);
 
             RefreshMap(paintableObject);
         }

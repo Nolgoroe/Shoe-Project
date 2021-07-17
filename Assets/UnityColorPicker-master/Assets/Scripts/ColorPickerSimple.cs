@@ -218,6 +218,8 @@ public class ColorPickerSimple : MonoBehaviour
             colorPickedFrontImage.color = Color.HSVToRGB(h, s, valueHSV);
 
             PainterManager.Instacne.painter.Color = colorPickedFrontImage.color;
+
+            gradMaterial.SetColor("_Color", colorPickedFrontImage.color);
         }
 
     }
@@ -238,6 +240,8 @@ public class ColorPickerSimple : MonoBehaviour
             colorPickedFrontImage.color = Color.HSVToRGB(h, s, valueHSV);
 
             PainterManager.Instacne.painter.Color = colorPickedFrontImage.color;
+
+            gradMaterial.SetColor("_Color", colorPickedFrontImage.color);
         }
     }
 } 
