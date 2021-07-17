@@ -8,6 +8,8 @@ TagManager:
   - ShoePiece
   - Side Bar
   - Grad
+  - GradTexture
+  - ShoePieceNonPaintable
   layers:
   - Default
   - TransparentFX

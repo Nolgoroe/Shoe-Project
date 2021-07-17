@@ -44,7 +44,7 @@ public class ColorPickerSimple : MonoBehaviour
 
     void Update() {
 
-        if (TouchManager.isInGame && !TouchManager.Instance.chosenTex && !PainterManager.Instacne.hasErased)
+        if (TouchManager.isInGame && !TouchManager.Instance.chosenTex && !TouchManager.Instance.chosenGrad && !PainterManager.Instacne.hasErased)
         {
             if (Input.touchCount > 0)
             {
