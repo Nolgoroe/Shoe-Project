@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public GameObject firstScreenUI, lastScreenUI, lastScreenAssetsNoShoe ,sidePanel;
+    public GameObject mainCanvas, cameraCanvas;
     public RawImage videoBG;
 
     public Transform shoeGO;
@@ -35,13 +36,18 @@ public class UIManager : MonoBehaviour
     public bool isLastScreen;
 
     public string screenshotSaveFolderPath;
+    public string manualSaveFolder;
 
     public List<UIElementLanguageData> UiLanguages;
+
+    [HideInInspector]
+    public bool savedImage;
     private void Start()
     {
         Instance = this;
-        isLastScreen = false;
 
+        isLastScreen = false;
+        savedImage = false;
         startDesignButton.interactable = false;
         startDesignButton.GetComponent<Image>().raycastTarget = false;
 
@@ -54,7 +60,14 @@ public class UIManager : MonoBehaviour
         videoBG.raycastTarget = false;
     }
 
-
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.X))
+    //    {
+    //        Debug.Log("Pic");
+    //        StartCoroutine(ManualScreenShot());
+    //    }
+    //}
     public void AfterAnimation()
     {
         startDesignButton.interactable = true;
@@ -81,6 +94,13 @@ public class UIManager : MonoBehaviour
         ColorPickerSimple.Instacne.colorPickedFrontImage.color = PainterManager.Instacne.painter.Color;
         ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color", ColorPickerSimple.Instacne.colorPickedFrontImage.color);
         ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color2", Color.black);
+
+
+        Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>(); /// Second
+
+        r.material.SetColor("_FirstColor", ColorPickerSimple.Instacne.colorPickedFrontImage.color); /// Second
+        r.material.SetColor("_SecondColor", ColorPickerSimple.Instacne.colorPickedBackImage.color); /// Second
+
 
         StartCoroutine(AnimationManager.Instance.AnimateSecondToThird());
         //PainterManager.Instacne.hitScreenData.enabled = false;
@@ -119,6 +139,32 @@ public class UIManager : MonoBehaviour
             Debug.Log("Backup Image");
         }
     }
+
+    //public IEnumerator ManualScreenShot()
+    //{
+
+    //    shoeGO.gameObject.SetActive(false);
+    //    mainCanvas.SetActive(false);
+    //    cameraCanvas.SetActive(false);
+
+    //    string path = Application.streamingAssetsPath + "/Grad";
+    //    DirectoryInfo dir = new DirectoryInfo(Application.streamingAssetsPath + "/Grad");
+
+    //    if (!dir.Exists)
+    //    {
+    //        Directory.CreateDirectory(path);
+    //    }
+
+    //    ScreenCapture.CaptureScreenshot(path + "/Screenshot.png");
+
+    //    yield return new WaitForEndOfFrame();
+
+    //    shoeGO.gameObject.SetActive(true);
+    //    mainCanvas.SetActive(true);
+    //    cameraCanvas.SetActive(true);
+
+    //    savedImage = true;
+    //}
     public IEnumerator TakeScreenShot()
     {
         //yield return new WaitForSeconds(1.1f);

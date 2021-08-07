@@ -94,6 +94,11 @@ public class ColorPickerSimple : MonoBehaviour
 
                                 colorPickedFrontImage.color = Color;
                                 gradMaterial.SetColor("_Color", Color);
+
+                                Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>(); /// Second
+
+                                r.material.SetColor("_FirstColor", colorPickedFrontImage.color); /// Second
+
                                 ChangeHSVWheel();
 
                             }
@@ -173,6 +178,10 @@ public class ColorPickerSimple : MonoBehaviour
                                 colorPickedFrontImage.color = Color;
                                 gradMaterial.SetColor("_Color", Color);
 
+                                Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>(); /// Second
+
+                                r.material.SetColor("_FirstColor", colorPickedFrontImage.color); /// Second
+
                                 ChangeHSVWheel();
                                 Debug.Log(Color);
                             }
@@ -197,7 +206,14 @@ public class ColorPickerSimple : MonoBehaviour
             gradMaterial.SetColor("_Color", colorPickedFrontImage.color);
             gradMaterial.SetColor("_Color2", temp);
 
+            Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>(); /// Second
+
+            r.material.SetColor("_FirstColor", colorPickedFrontImage.color); /// Second
+            r.material.SetColor("_SecondColor", temp); /// Second
+
             PainterManager.Instacne.painter.Color = colorPickedFrontImage.color;
+
+            ChangeHSVWheel();
         }
     }
 
@@ -215,11 +231,17 @@ public class ColorPickerSimple : MonoBehaviour
             {
                 valueHSV = 0.01f;
             }
+
             colorPickedFrontImage.color = Color.HSVToRGB(h, s, valueHSV);
 
             PainterManager.Instacne.painter.Color = colorPickedFrontImage.color;
 
             gradMaterial.SetColor("_Color", colorPickedFrontImage.color);
+
+            Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>(); /// Second
+
+            r.material.SetColor("_FirstColor", colorPickedFrontImage.color); /// Second
+
         }
 
     }
@@ -237,11 +259,16 @@ public class ColorPickerSimple : MonoBehaviour
             {
                 valueHSV = 0.01f;
             }
+
             colorPickedFrontImage.color = Color.HSVToRGB(h, s, valueHSV);
 
             PainterManager.Instacne.painter.Color = colorPickedFrontImage.color;
 
             gradMaterial.SetColor("_Color", colorPickedFrontImage.color);
+
+            Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>(); /// Second
+
+            r.material.SetColor("_FirstColor", colorPickedFrontImage.color); /// Second
         }
     }
 } 

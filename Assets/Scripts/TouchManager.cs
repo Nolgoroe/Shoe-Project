@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PaintIn3D;
+using System.IO;
+using UnityEngine.Networking;
+
 
 public class TouchManager : MonoBehaviour
 {
@@ -60,6 +63,14 @@ public class TouchManager : MonoBehaviour
     public Touch touch;
 
     public TextureHolderScript currentTHS;
+
+    public Transform QuatMat; ///Second
+
+    public Camera gradCam; ///Second
+
+
+
+    public RenderTexture curTex; ///Second
     void Start()
     {
         canPaint = false;
@@ -73,6 +84,8 @@ public class TouchManager : MonoBehaviour
         chosenGrad = false;
         texture.gameObject.SetActive(false);
         gradTexture = null;
+
+        //gradCam.gameObject.SetActive(false);
     }
 
     void Update()
@@ -315,9 +328,12 @@ public class TouchManager : MonoBehaviour
         if (paintableObject)
         {
             Transform newDetected = paintableObject.transform;
-            //HelpData hd = newDetected.GetComponent<HelpData>();
+            HelpData hd = newDetected.GetComponent<HelpData>();
+            Renderer meshRenderer = newDetected.GetComponent<MeshRenderer>();
 
             timerForApplyTex = 0;
+            meshRenderer.material.SetColor("_FirstColor", Color.white);
+            meshRenderer.material.SetColor("_SecondColor", Color.white);
 
             //meshRendere.material = hd.normalMat;
             //paintableTexture.Texture = meshRendere.material.GetTexture("_BaseMap");
@@ -344,7 +360,7 @@ public class TouchManager : MonoBehaviour
         if (paintableObject)
         {
             Transform newDetected = paintableObject.transform;
-            Renderer meshRendere = newDetected.GetComponent<MeshRenderer>();
+            Renderer meshRenderer = newDetected.GetComponent<MeshRenderer>();
             HelpData hd = newDetected.GetComponent<HelpData>();
 
             timerForApplyTex = 0;
@@ -372,16 +388,26 @@ public class TouchManager : MonoBehaviour
 
             texture.Apply();
 
-            // connect texture to material of GameObject this script is attached to
-            //meshRendere.material.mainTexture = texture;
 
-            //meshRendere.material = hd.gradMat;
-            //paintableTexture.Texture = paintMapGrad;
+            //connect texture to material of GameObject this script is attached to
+            //meshRenderer.material.mainTexture = texture;
 
-            //meshRendere.material.SetColor("_Color", ColorPickerSimple.Instacne.colorPickedFrontImage.color);
-            //meshRendere.material.SetColor("_Color2", ColorPickerSimple.Instacne.colorPickedBackImage.color);
 
-            meshRendere.materials[0].SetTexture("_BaseMap", texture);
+            //meshRenderer.material = hd.gradMat; ///First
+            //paintableTexture.Texture = paintMapGrad; ///First
+
+            //meshRenderer.material.SetColor("_FirstColor", ColorPickerSimple.Instacne.colorPickedFrontImage.color); ///First
+            //meshRenderer.material.SetColor("_SecondColor", ColorPickerSimple.Instacne.colorPickedBackImage.color); ///First
+
+            //gradCam.gameObject.SetActive(true); /// Second
+
+            //StartCoroutine(UIManager.Instance.ManualScreenShot()); /// Second
+
+            //gradCam.gameObject.SetActive(false); /// Second
+
+            //StartCoroutine(LoadImage(meshRenderer)); /// Second
+
+            meshRenderer.materials[0].SetTexture("_BaseMap", curTex);
 
             RefreshMap(paintableObject);
         }
@@ -397,6 +423,46 @@ public class TouchManager : MonoBehaviour
 
     }
 
+    //IEnumerator LoadImage(Renderer meshRenderer) /// second
+    //{
+    //    yield return new WaitUntil(() => UIManager.Instance.savedImage);
+
+    //    UIManager.Instance.savedImage = false;
+
+    //    DirectoryInfo dir = new DirectoryInfo(Application.streamingAssetsPath + "/Grad");
+
+    //    FileInfo[] Images = dir.GetFiles("*.png");
+
+    //    foreach (FileInfo f in Images)
+    //    {
+    //        if (f.Name.Contains("meta"))
+    //        {
+    //            yield break;
+    //        }
+    //        else
+    //        {
+    //            string wwwImageFilePath = "file://" + f.FullName.ToString();
+
+
+    //            UnityWebRequest www = UnityWebRequestTexture.GetTexture(wwwImageFilePath);
+    //            yield return www.SendWebRequest();
+
+    //            if (www.isNetworkError || www.isHttpError)
+    //            {
+    //                Debug.Log(www.error);
+    //            }
+    //            else
+    //            {
+    //                curTex = DownloadHandlerTexture.GetContent(www);
+
+    //                meshRenderer.materials[0].SetTexture("_BaseMap", curTex); /// Second
+    //            }
+    //        }
+
+    //    }
+
+    //    gradCam.gameObject.SetActive(false); /// Second
+    //}
     private void DisconnectPaint3DTouches()
     {
         var fingers = PainterManager.Instacne.hitScreenData.inputManager.Fingers;
