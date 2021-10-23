@@ -56,6 +56,8 @@ public class AnimationManager : MonoBehaviour
 
     public Button[] languageButtons;
 
+    public Vector3 postitionForSharing;
+
     [HideInInspector]
     public bool isVideoOpen, isInfoOpen;
     [HideInInspector]
@@ -553,12 +555,14 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.donePaintingButton.interactable = true;
         isFinishedAnimation = true;
+        TouchManager.canPaintShoe = true;
         yield return null;
     }
 
     public IEnumerator AnimateThirdToLast()
     {
         //yield return new WaitForSeconds(1.1f);
+        TouchManager.canPaintShoe = false;
 
         for (int i = 0; i < objectsToAnimate3rdToLast.Length; i++)
         {
@@ -600,5 +604,14 @@ public class AnimationManager : MonoBehaviour
             yield return new WaitForSeconds(objectToAnimateLast[i].delatToActivate);
         }
         yield return null;
+    }
+
+    public void AnimateForSharing()
+    {
+        UIManager.Instance.lastScreenAssetsNoShoe.SetActive(false);
+        UIManager.Instance.designAgainFromShareScreen.SetActive(true);
+        shoeToAnimateLast.theObject.transform.DOLocalMove(postitionForSharing, 0.8f).SetEase(Ease.OutCirc);
+        shoeToAnimateLast.theObject.transform.DORotate(Vector3.zero, 0.8f).SetEase(Ease.OutCubic);
+        TouchManager.isSharingScreen = true;
     }
 }

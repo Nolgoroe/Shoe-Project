@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject firstScreenUI, lastScreenUI, lastScreenAssetsNoShoe ,sidePanel;
     public GameObject mainCanvas, cameraCanvas;
+    public GameObject designAgainFromShareScreen;
     public RawImage videoBG;
 
     public Transform shoeGO;
@@ -61,6 +62,7 @@ public class UIManager : MonoBehaviour
         firstScreenUI.SetActive(true);
         sidePanel.SetActive(true);
         videoBG.raycastTarget = false;
+        designAgainFromShareScreen.SetActive(false);
         disableOnTOuch = new List<GameObject>();
     }
 
@@ -171,24 +173,6 @@ public class UIManager : MonoBehaviour
     //}
     public IEnumerator TakeScreenShot()
     {
-        //yield return new WaitForSeconds(1.1f);
-        //shoeGO.transform.rotation = Quaternion.Euler(4.5f,145,-13.5f);
-        //shoeGO.transform.position = Vector3.zero;
-
-        //shotPicScreenShot.transform.localPosition = new Vector3(40, 50, 0);
-        //shotPicScreenShot.transform.localScale = new Vector3(1.35f, 1.35f, 1.35f);
-
-
-
-        //for (int i = 0; i < 100000; i++)
-        //{
-        //    if (!System.IO.File.Exists(Application.streamingAssetsPath + "/Screenshot" + i + ".png"))
-        //    {
-        //        ScreenCapture.CaptureScreenshot(Application.streamingAssetsPath + "/Screenshot" + i + ".png");
-        //        break;
-        //    }
-        //}
-
         DateTime theTime = DateTime.Now;
         string date = theTime.ToString("yyyy-MM-dd");
         string time = theTime.ToString("HH-mm-ss");
@@ -206,11 +190,6 @@ public class UIManager : MonoBehaviour
 
         yield return null;
         StartCoroutine(AnimationManager.Instance.AnimatelastScren());
-        //shotPicScreenShot.transform.localPosition = new Vector3(40, 180, 0);
-        //shotPicScreenShot.transform.localScale = Vector3.one;
-
-        //lastScreenAssetsNoShoe.SetActive(true);
-        //sidePanel.SetActive(true);
     }
 
 

@@ -16,7 +16,7 @@ public class TouchManager : MonoBehaviour
 
     private Vector2 touchPos;
 
-    private float rotationZ, rotationX;
+    private float ShoeRotationZ, ShoeRotationY;
     private Camera Camera;
 
     public Transform toRotate;
@@ -25,6 +25,8 @@ public class TouchManager : MonoBehaviour
     public float zoomSpeed = 3;
 
     public static bool isInGame = true;
+    public static bool canPaintShoe = false;
+    public static bool isSharingScreen = false;
 
     public RawImage texture;
     public Image gradTexture;
@@ -83,7 +85,7 @@ public class TouchManager : MonoBehaviour
         chosenGrad = false;
         texture.gameObject.SetActive(false);
         gradTexture = null;
-        
+        isSharingScreen = false;
         //gradCam.gameObject.SetActive(false);
     }
 
@@ -91,7 +93,7 @@ public class TouchManager : MonoBehaviour
     {
         if (isInGame)
         {
-            if(Input.touchCount == 0)
+            if (Input.touchCount == 0)
             {
                 PainterManager.Instacne.hitScreenData.enabled = false;
 
@@ -112,14 +114,17 @@ public class TouchManager : MonoBehaviour
                 DisconnectPaint3DTouches();
             }
 
-            if (Input.touchCount == 1)
+            if (Input.touchCount > 0)
             {
                 if (AnimationManager.isFinishedAnimation)
                 {
                     DeactivateObjectsOnScreenTouch();
                     AnimationManager.isFinishedAnimation = false;
                 }
+            }
 
+            if (Input.touchCount == 1 && canPaintShoe)
+            {
                 touch = Input.GetTouch(0);
 
                 if (!PainterManager.Instacne.hitScreenData.enabled)
@@ -286,7 +291,7 @@ public class TouchManager : MonoBehaviour
 
             }
 
-            if (Input.touchCount >= 2)
+            if (Input.touchCount >= 2 && canPaintShoe)
             {
                 PainterManager.Instacne.hitScreenData.enabled = false;
 
@@ -304,19 +309,49 @@ public class TouchManager : MonoBehaviour
                     {
                         float deltaX = touchOne.deltaPosition.x;
                         float deltaY = touchOne.deltaPosition.y;
-                        rotationX -= deltaX * Time.deltaTime * rotationSpeedModifier;
-                        rotationZ -= deltaY * Time.deltaTime * rotationSpeedModifier;
-                        rotationZ = Mathf.Clamp(rotationZ, -13, 13);
+                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ -= deltaY * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
                     }
                     else
                     {
                         float deltaX = touchOne.deltaPosition.x;
                         float deltaY = touchOne.deltaPosition.y;
-                        rotationX -= deltaX * Time.deltaTime * rotationSpeedModifier;
-                        rotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
-                        rotationZ = Mathf.Clamp(rotationZ, -13, 13);
+                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
                     }
-                    toRotate.transform.eulerAngles = new Vector3(0, rotationX, rotationZ);
+                    toRotate.transform.eulerAngles = new Vector3(0, ShoeRotationY, ShoeRotationZ);
+                }
+            }
+        }
+
+        if (isSharingScreen)
+        {
+            if (Input.touchCount >= 2)
+            {
+                Touch touchOne = Input.GetTouch(0);
+                Touch touchTwo = Input.GetTouch(1);
+
+                if (touchOne.phase == TouchPhase.Moved)
+                {
+                    if (toRotate.transform.eulerAngles.y < 320 && toRotate.transform.eulerAngles.y > 230)
+                    {
+                        float deltaX = touchOne.deltaPosition.x;
+                        float deltaY = touchOne.deltaPosition.y;
+                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ -= deltaY * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
+                    }
+                    else
+                    {
+                        float deltaX = touchOne.deltaPosition.x;
+                        float deltaY = touchOne.deltaPosition.y;
+                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
+                    }
+                    toRotate.transform.eulerAngles = new Vector3(0, ShoeRotationY, ShoeRotationZ);
                 }
             }
         }
