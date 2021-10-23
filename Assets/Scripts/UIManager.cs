@@ -6,6 +6,7 @@ using UnityEngine.Video;
 using UnityEngine.UI;
 using System;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class UIManager : MonoBehaviour
 
     public List<UIElementLanguageData> UiLanguages;
 
+    public List<GameObject> disableOnTOuch;
+
     [HideInInspector]
     public bool savedImage;
     private void Start()
@@ -58,6 +61,7 @@ public class UIManager : MonoBehaviour
         firstScreenUI.SetActive(true);
         sidePanel.SetActive(true);
         videoBG.raycastTarget = false;
+        disableOnTOuch = new List<GameObject>();
     }
 
     //private void Update()
@@ -279,5 +283,15 @@ public class UIManager : MonoBehaviour
                 AM.targetSprite = AM.theObject.GetComponent<UIElementLanguageData>().languagesInOrderEHAC[index];
             }
         }
+    }
+    
+    public void CloseScreen(GameObject toClose)
+    {
+        toClose.SetActive(false);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }

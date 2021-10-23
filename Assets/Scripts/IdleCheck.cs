@@ -15,7 +15,7 @@ public class IdleCheck : MonoBehaviour
     }
     void Update()
     {
-        if(Input.touchCount == 0 && !AnimationManager.Instance.isOutOfGame)
+        if(Input.touchCount == 0 && /*!AnimationManager.Instance.isOutOfGame*/ TouchManager.isInGame)
         {
             idleTime += Time.deltaTime;
 

@@ -38,7 +38,11 @@ public class Timer : MonoBehaviour
 
         if (UIManager.Instance.isLastScreen)
         {
-            if (AnimationManager.Instance.isOutOfGame)
+            //if (AnimationManager.Instance.isOutOfGame)
+            //{
+            //    return;
+            //}
+            if (!TouchManager.isInGame)
             {
                 return;
             }

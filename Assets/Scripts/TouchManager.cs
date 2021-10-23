@@ -24,7 +24,7 @@ public class TouchManager : MonoBehaviour
     public float rotationSpeedModifier = 0.5f;
     public float zoomSpeed = 3;
 
-    public static bool isInGame = false;
+    public static bool isInGame = true;
 
     public RawImage texture;
     public Image gradTexture;
@@ -68,23 +68,22 @@ public class TouchManager : MonoBehaviour
 
     public Camera gradCam; ///Second
 
-
-
     public RenderTexture curTex; ///Second
+
     void Start()
     {
         canPaint = false;
         changingTexNow = false;
         Instance = this;
         Camera = Camera.main;
-        isInGame = false;
+        isInGame = true;
         clickingTex = false;
         clickingGrad = false;
         chosenTex = false;
         chosenGrad = false;
         texture.gameObject.SetActive(false);
         gradTexture = null;
-
+        
         //gradCam.gameObject.SetActive(false);
     }
 
@@ -115,6 +114,12 @@ public class TouchManager : MonoBehaviour
 
             if (Input.touchCount == 1)
             {
+                if (AnimationManager.isFinishedAnimation)
+                {
+                    DeactivateObjectsOnScreenTouch();
+                    AnimationManager.isFinishedAnimation = false;
+                }
+
                 touch = Input.GetTouch(0);
 
                 if (!PainterManager.Instacne.hitScreenData.enabled)
@@ -492,6 +497,16 @@ public class TouchManager : MonoBehaviour
     private void EnableHitScreen()
     {
         PainterManager.Instacne.hitScreenData.enabled = true;
+    }
+
+    private void DeactivateObjectsOnScreenTouch()
+    {
+        foreach (GameObject go in UIManager.Instance.disableOnTOuch)
+        {
+            go.SetActive(false);
+        }
+
+        UIManager.Instance.disableOnTOuch.Clear();
     }
 }
 

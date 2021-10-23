@@ -15,11 +15,16 @@ public class ReadFolderData : MonoBehaviour
     public string colorCode;
 
     public Texture[] languageTextures;
+    public Texture gradTexture;
+
     public string[] languageVideoClipsURL;
 
     public Color translatedColorCode;
 
     public Button[] languageButtons;
+
+    public GameObject quadGradMaterial;
+
     void Start()
     {
         Instance = this;
@@ -46,6 +51,16 @@ public class ReadFolderData : MonoBehaviour
             if (f.ToString().Contains("INFO"))
             {
                 StartCoroutine(LoadImages(f));
+            }
+        }
+
+        FileInfo[] gradImage = dir.GetFiles("*.png");
+
+        foreach (FileInfo f in Images)
+        {
+            if (f.ToString().Contains("Grad"))
+            {
+                StartCoroutine(LoadGradTexture(f));
             }
         }
 
@@ -192,6 +207,40 @@ public class ReadFolderData : MonoBehaviour
             }
         }
     }
+    IEnumerator LoadGradTexture(FileInfo GameData)
+    {
+        //1 ignore meata files
+        if (GameData.Name.Contains("meta"))
+        {
+            yield break;
+        }
+        else
+        {
+            string wwwImageFilePath = "file://" + GameData.FullName.ToString();
+
+
+            UnityWebRequest www = UnityWebRequestTexture.GetTexture(wwwImageFilePath);
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                gradTexture = DownloadHandlerTexture.GetContent(www);
+
+                if (!gradTexture)
+                {
+                    Debug.Log("Coulden't find grad texture! using default");
+                }
+                else
+                {
+                    StartCoroutine(SetGradTexture());
+                }
+            }
+        }
+    }
 
     IEnumerator SetVideo()
     {
@@ -199,5 +248,13 @@ public class ReadFolderData : MonoBehaviour
 
         UIManager.Instance.playerOfVideos.Stop();
         UIManager.Instance.playerOfVideos.SetDirectAudioVolume(0,1);
+    }
+
+    IEnumerator SetGradTexture()
+    {
+        yield return new WaitForSeconds(1f);
+
+        quadGradMaterial.GetComponent<MeshRenderer>().materials[0].SetTexture("_BlackWhiteTex", gradTexture);
+
     }
 }

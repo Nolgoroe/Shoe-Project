@@ -20,6 +20,7 @@ public class AnimatedObject
     public Sprite originalSprite;
     public Sprite targetSprite;
     public bool canChangeLanguage;
+    public bool isDisableOnTouch;
 }
 
 [Serializable]
@@ -32,6 +33,7 @@ public class FadeAnimatedObjects
     public float timeToAnimate = 1;
     public bool isStartNoAlpha;
 }
+
 public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager Instance;
@@ -57,7 +59,9 @@ public class AnimationManager : MonoBehaviour
     [HideInInspector]
     public bool isVideoOpen, isInfoOpen;
     [HideInInspector]
-    public bool isOutOfGame;
+    //public bool isOutOfGame;
+
+    public static bool isFinishedAnimation = false;
     void Awake()
     {
         Instance = this;
@@ -234,7 +238,8 @@ public class AnimationManager : MonoBehaviour
     public void AnimateSidePanel()
     {
         UIManager.Instance.videoBG.raycastTarget = true;
-        isOutOfGame = true;
+        //isOutOfGame = true;
+        TouchManager.isInGame = false;
         isInfoOpen = true;
         EnableLanguageButtons();
         Timer.Instance.timerIsRunning = false;
@@ -260,8 +265,8 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator OpenInfoScreen(bool Open)
     {
-        isOutOfGame = true;
-
+        //isOutOfGame = true;
+        TouchManager.isInGame = false;
         if (Open)
         {
             videoAndInfoClosed();
@@ -354,8 +359,8 @@ public class AnimationManager : MonoBehaviour
 
     public void ChangeVideoLanguage(int index)
     {
-        isOutOfGame = true;
-
+        //isOutOfGame = true;
+        TouchManager.isInGame = false;
         UIManager.Instance.videoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
 
         //if (isInfoOpen)
@@ -446,8 +451,8 @@ public class AnimationManager : MonoBehaviour
     {
         UIManager.Instance.videoBG.raycastTarget = false;
 
-        isOutOfGame = false;
-
+        //isOutOfGame = false;
+        TouchManager.isInGame = true;
         MoveScreenState(false);
 
         videoAndInfoClosed();
@@ -538,11 +543,16 @@ public class AnimationManager : MonoBehaviour
     {
         for (int i = 0; i < objectsToAnimate3rd.Length; i++)
         {
+            if (objectsToAnimate3rd[i].isDisableOnTouch)
+            {
+                UIManager.Instance.disableOnTOuch.Add(objectsToAnimate3rd[i].theObject);
+            }
             objectsToAnimate3rd[i].theObject.transform.DOLocalMove(objectsToAnimate3rd[i].newPos, objectsToAnimate3rd[i].timeToAnimate).SetEase(Ease.OutCirc);
             yield return new WaitForSeconds(objectsToAnimate3rd[i].delatToActivate);
         }
 
         UIManager.Instance.donePaintingButton.interactable = true;
+        isFinishedAnimation = true;
         yield return null;
     }
 
