@@ -39,7 +39,7 @@ public class TouchManager : MonoBehaviour
 
     public float timerForGetTex = 0;
 
-    [HideInInspector]
+    
     public bool chosenTex = false;
     [HideInInspector]
     public bool chosenGrad = false;

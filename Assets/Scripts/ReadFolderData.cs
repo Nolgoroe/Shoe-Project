@@ -168,9 +168,9 @@ public class ReadFolderData : MonoBehaviour
 
             IdleCheck.Instance.timeTillReset = Convert.ToInt64(parsedList[2][0]);
 
-            Timer.Instance.timeToResetLastScreen = Convert.ToInt64(parsedList[3][0]);
+            //Timer.Instance.timeToResetLastScreen = Convert.ToInt64(parsedList[3][0]);
 
-            UIManager.Instance.screenshotSaveFolderPath = parsedList[4][0];
+            UIManager.Instance.screenshotSaveFolderPath = parsedList[3][0];
         }
     }
     IEnumerator LoadImages(FileInfo GameData)

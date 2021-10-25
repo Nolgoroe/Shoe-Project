@@ -1518,7 +1518,7 @@ MonoBehaviour:
   - theObject: {fileID: 145215829}
     originalPos: {x: 0, y: 0, z: 0}
     originalScale: {x: 0, y: 0, z: 0}
-    newPos: {x: -1070, y: 451, z: 0}
+    newPos: {x: -1100, y: 451, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
     timeToAnimate: 1
@@ -8839,7 +8839,6 @@ MonoBehaviour:
   timeToPaint: 10
   timerIsRunning: 0
   timeText: {fileID: 1305136116}
-  timeToResetLastScreen: 5
 --- !u!1 &1309352625
 GameObject:
   m_ObjectHideFlags: 0

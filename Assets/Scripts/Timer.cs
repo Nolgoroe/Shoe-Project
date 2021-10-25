@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     public bool timerIsRunning = false;
     public Text timeText;
 
-    public float timeToResetLastScreen = 5f;
+    //public float timeToResetLastScreen = 5f;
     private void Start()
     {
         Instance = this;
@@ -42,21 +42,21 @@ public class Timer : MonoBehaviour
             //{
             //    return;
             //}
-            if (!TouchManager.isInGame)
-            {
-                return;
-            }
-            else
-            {
-                if (timeToResetLastScreen > 0)
-                {
-                    timeToResetLastScreen -= Time.deltaTime;
-                }
-                else
-                {
-                    SceneManager.LoadScene(0);
-                }
-            }
+            //if (!TouchManager.isInGame)
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    if (timeToResetLastScreen > 0)
+            //    {
+            //        timeToResetLastScreen -= Time.deltaTime;
+            //    }
+            //    else
+            //    {
+            //        SceneManager.LoadScene(0);
+            //    }
+            //}
         }
     }
 

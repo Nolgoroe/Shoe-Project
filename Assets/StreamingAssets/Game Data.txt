@@ -1,5 +1,4 @@
 FF00EA, Color
 90, Time to paint in seconds
 90, Idle time
-60, Timer from last screen to first
 C:\Users\avish\Desktop\this , הurl של התיקייה בה תרצו לשמור screenshots
