@@ -304,7 +304,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -1546, y: 6}
-  m_SizeDelta: {x: 270, y: 270}
+  m_SizeDelta: {x: 269, y: 268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &58266845
 MonoBehaviour:
@@ -1286,7 +1286,7 @@ MonoBehaviour:
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
     timeToAnimate: 1
-    delatToActivate: 0.5
+    delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
     targetSprite: {fileID: 0}
@@ -1298,7 +1298,7 @@ MonoBehaviour:
     newPos: {x: -1150, y: 9.5, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 1.2
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1311,8 +1311,8 @@ MonoBehaviour:
     newPos: {x: 1150, y: 9.5, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
-    delatToActivate: 0.5
+    timeToAnimate: 1.2
+    delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
     targetSprite: {fileID: 0}
@@ -1324,7 +1324,7 @@ MonoBehaviour:
     newPos: {x: -1150, y: -330, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 1.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1337,8 +1337,8 @@ MonoBehaviour:
     newPos: {x: 1150, y: -330, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
-    delatToActivate: 0.5
+    timeToAnimate: 1.5
+    delatToActivate: 1
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
     targetSprite: {fileID: 0}
@@ -1390,7 +1390,7 @@ MonoBehaviour:
     newPos: {x: -706, y: 451, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 0.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1403,7 +1403,7 @@ MonoBehaviour:
     newPos: {x: 810, y: 435, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 0.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1416,7 +1416,7 @@ MonoBehaviour:
     newPos: {x: 0, y: -280, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 0.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1429,7 +1429,7 @@ MonoBehaviour:
     newPos: {x: 680, y: 290, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 0.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1442,7 +1442,7 @@ MonoBehaviour:
     newPos: {x: 750, y: -420, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 0.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1455,7 +1455,7 @@ MonoBehaviour:
     newPos: {x: 0, y: 450, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 0.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1468,8 +1468,8 @@ MonoBehaviour:
     newPos: {x: -50, y: -420, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
-    delatToActivate: 0.8
+    timeToAnimate: 0.5
+    delatToActivate: 0.2
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
     targetSprite: {fileID: 0}
@@ -1481,7 +1481,7 @@ MonoBehaviour:
     newPos: {x: 0, y: 0.8, z: 0}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
+    timeToAnimate: 0.5
     delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
@@ -1494,8 +1494,8 @@ MonoBehaviour:
     newPos: {x: 0, y: 1.25, z: -33.5}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
-    delatToActivate: 1
+    timeToAnimate: 0.5
+    delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
     targetSprite: {fileID: 0}
@@ -1507,8 +1507,8 @@ MonoBehaviour:
     newPos: {x: 0, y: 5, z: -800}
     newScale: {x: 0, y: 0, z: 0}
     newRotation: {x: 0, y: 0, z: 0}
-    timeToAnimate: 1
-    delatToActivate: 1
+    timeToAnimate: 0.48
+    delatToActivate: 0
     imageToChange: {fileID: 0}
     originalSprite: {fileID: 0}
     targetSprite: {fileID: 0}
@@ -1758,7 +1758,7 @@ MonoBehaviour:
   - {fileID: 1132877020}
   - {fileID: 1198708319}
   - {fileID: 23040989}
-  postitionForSharing: {x: 0, y: 0, z: 0}
+  postitionForSharing: {x: 1.6, y: 0, z: 0}
   isVideoOpen: 0
   isInfoOpen: 0
 --- !u!4 &186401710
@@ -2931,7 +2931,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1484.76, y: -330}
-  m_SizeDelta: {x: 270, y: 270}
+  m_SizeDelta: {x: 269, y: 268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &387627471
 MonoBehaviour:
@@ -5274,7 +5274,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -1546, y: 342.6}
-  m_SizeDelta: {x: 270, y: 270}
+  m_SizeDelta: {x: 269, y: 268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &769069674
 MonoBehaviour:
@@ -6220,7 +6220,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -1548.01, y: -330}
-  m_SizeDelta: {x: 270, y: 270}
+  m_SizeDelta: {x: 269, y: 268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921277378
 MonoBehaviour:
@@ -8192,6 +8192,7 @@ GameObject:
   - component: {fileID: 1216062601}
   - component: {fileID: 1216062602}
   - component: {fileID: 1216062605}
+  - component: {fileID: 1216062606}
   m_Layer: 5
   m_Name: Start Designing Button
   m_TagString: Untagged
@@ -8252,7 +8253,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -8273,6 +8274,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1198776291}
         m_MethodName: GoToGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1216062606}
+        m_MethodName: ButtonToDisable
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8332,6 +8344,18 @@ MonoBehaviour:
   rightToLeftWorldPos: {x: 0, y: 0, z: 0}
   rightToLeftWorldScale: {x: 0, y: 0, z: 0}
   partOfWorld: 0
+--- !u!114 &1216062606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216062600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01bb1b1ad2c18e249ab2921cc861f77e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1224233418
 GameObject:
   m_ObjectHideFlags: 0
@@ -9605,16 +9629,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1443716785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -800}
+  m_LocalPosition: {x: 0, y: 0, z: -799.99994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1527531609}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 120}
-  m_SizeDelta: {x: 170.84003, y: 85.173386}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 164.9}
+  m_SizeDelta: {x: -1732.924, y: -986.732}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1443716787
 MonoBehaviour:
@@ -10650,7 +10674,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1483.36, y: 10.68}
-  m_SizeDelta: {x: 270, y: 270}
+  m_SizeDelta: {x: 269, y: 268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1635633552
 MonoBehaviour:
@@ -12166,7 +12190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -12406,7 +12430,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -723}
-  m_SizeDelta: {x: 850, y: 265}
+  m_SizeDelta: {x: 843, y: 263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1795047228
 MonoBehaviour:
@@ -13393,7 +13417,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1479, y: 340}
-  m_SizeDelta: {x: 270, y: 270}
+  m_SizeDelta: {x: 269, y: 268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2076265346
 MonoBehaviour:

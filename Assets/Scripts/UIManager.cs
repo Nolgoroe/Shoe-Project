@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour
 
         ColorPickerSimple.Instacne.colorPickedFrontImage.color = PainterManager.Instacne.painter.Color;
         ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color", ColorPickerSimple.Instacne.colorPickedFrontImage.color);
-        ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color2", Color.black);
+        ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color2", Color.white);
 
 
         Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>(); /// Second
@@ -189,7 +189,7 @@ public class UIManager : MonoBehaviour
         }
 
         yield return null;
-        StartCoroutine(AnimationManager.Instance.AnimatelastScren());
+        //StartCoroutine(AnimationManager.Instance.AnimatelastScren());
     }
 
 

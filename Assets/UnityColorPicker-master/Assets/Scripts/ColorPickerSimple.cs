@@ -50,7 +50,7 @@ public class ColorPickerSimple : MonoBehaviour
             {
                 Touch touch = Input.GetTouch(0);
                
-                if (touch.phase == TouchPhase.Moved)
+                if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Began)
                 {
                     Vector3 screenPos = Camera.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 100f));
 

@@ -207,7 +207,7 @@ namespace PaintIn3D
 
         public void ClearFingers()
         {
-
+            fings.Clear();
         }
 
 		protected void LateUpdate()

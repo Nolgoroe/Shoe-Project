@@ -93,7 +93,10 @@ public class PainterManager : MonoBehaviour
         painter.Texture = null;
         previousColor = ColorPickerSimple.Instacne.colorPickedFrontImage.color;
         ColorPickerSimple.Instacne.colorPickedFrontImage.color = Color.white;
+        //ColorPickerSimple.Instacne.colorPickedBackImage.color = Color.white;
         painter.Color = Color.white;
+
+        updateGradMat(painter.Color);
     }
 
     public void ChangeBrushBG(BrushImageDataHolder toChange)
@@ -112,7 +115,19 @@ public class PainterManager : MonoBehaviour
         {
             hasErased = false;
             ColorPickerSimple.Instacne.colorPickedFrontImage.color = previousColor;
+
+            updateGradMat(previousColor);
+
             painter.Color = previousColor;
         }
+    }
+
+    void updateGradMat(Color toSet)
+    {
+        ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color", toSet);
+
+        Renderer r = TouchManager.Instance.QuatMat.GetComponent<Renderer>();
+
+        r.material.SetColor("_FirstColor", toSet);
     }
 }

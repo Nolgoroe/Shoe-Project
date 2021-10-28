@@ -530,7 +530,7 @@ public class AnimationManager : MonoBehaviour
     {
         for (int i = 0; i < objectsToAnimate2nd3rd.Length; i++)
         {
-            objectsToAnimate2nd3rd[i].theObject.transform.DOLocalMove(objectsToAnimate2nd3rd[i].newPos, objectsToAnimate2nd3rd[i].timeToAnimate).SetEase(Ease.OutCirc);
+            objectsToAnimate2nd3rd[i].theObject.transform.DOLocalMove(objectsToAnimate2nd3rd[i].newPos, objectsToAnimate2nd3rd[i].timeToAnimate).SetEase(Ease.InCubic);
             yield return new WaitForSeconds(objectsToAnimate2nd3rd[i].delatToActivate);
         }
 
@@ -590,7 +590,10 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.firstScreenUI.SetActive(false);
         UIManager.Instance.lastScreenUI.SetActive(true);
 
-        StartCoroutine(UIManager.Instance.TakeScreenShot());
+        TouchManager.Instance.SetShoeRotation(shoeToAnimateLast.newRotation.y, shoeToAnimateLast.newRotation.z);
+        //StartCoroutine(UIManager.Instance.TakeScreenShot());
+        StartCoroutine(AnimatelastScren());
+
         //UIManager.Instance.sidePanel.SetActive(true);
         yield return null;
     }
@@ -610,8 +613,9 @@ public class AnimationManager : MonoBehaviour
     {
         UIManager.Instance.lastScreenAssetsNoShoe.SetActive(false);
         UIManager.Instance.designAgainFromShareScreen.SetActive(true);
-        shoeToAnimateLast.theObject.transform.DOLocalMove(postitionForSharing, 0.8f).SetEase(Ease.OutCirc);
-        shoeToAnimateLast.theObject.transform.DORotate(Vector3.zero, 0.8f).SetEase(Ease.OutCubic);
+        //shoeToAnimateLast.theObject.transform.DOLocalMove(postitionForSharing, 0.8f).SetEase(Ease.OutCirc);
+        //shoeToAnimateLast.theObject.transform.DORotate(Vector3.zero, 0.8f).SetEase(Ease.OutCubic);
         TouchManager.isSharingScreen = true;
+        StartCoroutine(UIManager.Instance.TakeScreenShot());
     }
 }

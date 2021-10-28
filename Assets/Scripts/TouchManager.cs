@@ -95,6 +95,10 @@ public class TouchManager : MonoBehaviour
         {
             if (Input.touchCount == 0)
             {
+                PainterManager.Instacne.hitScreenData.ClearHitCache();
+                PainterManager.Instacne.hitScreenData.ResetConnections();
+                PainterManager.Instacne.hitScreenData.ClearFingers();
+
                 PainterManager.Instacne.hitScreenData.enabled = false;
 
                 textureScrollRect.enabled = true;
@@ -129,7 +133,7 @@ public class TouchManager : MonoBehaviour
 
                 if (!PainterManager.Instacne.hitScreenData.enabled)
                 {
-                    Invoke("EnableHitScreen", 0.1f);
+                    Invoke("EnableHitScreen", 0.15f);
                 }
 
                 if (touch.phase == TouchPhase.Stationary)
@@ -357,6 +361,11 @@ public class TouchManager : MonoBehaviour
         }
     }
 
+    public void SetShoeRotation(float rotationY, float rotationZ)
+    {
+        ShoeRotationY = rotationY;
+        ShoeRotationZ = rotationZ;
+    }
 
     public void RefreshMap(P3dPaintable paintableObject)
     {
