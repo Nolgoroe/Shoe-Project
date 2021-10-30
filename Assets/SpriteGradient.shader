@@ -8,7 +8,7 @@
 	}
 
 		SubShader{
-			 Tags { "Queue" = "Transparent" "RenderType" = "Transparent" }
+			 Tags{ "RenderType" = "TransparentCutout" "Queue" = "AlphaTest"}
 
 			Pass {
 				CGPROGRAM
@@ -47,7 +47,7 @@
 
 				float4 frag(v2f i) : COLOR{
 					float4 c = tex2D(_BaseMap, i.Alpha) * i.col;
-					clip(c.a > 0.5f);
+					clip(c.a - 0.3);
 					return c;
 				}
 					ENDCG

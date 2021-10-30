@@ -563,6 +563,7 @@ public class AnimationManager : MonoBehaviour
     {
         //yield return new WaitForSeconds(1.1f);
         TouchManager.canPaintShoe = false;
+        UIManager.Instance.tutorialPaintScreen.SetActive(false);
 
         for (int i = 0; i < objectsToAnimate3rdToLast.Length; i++)
         {

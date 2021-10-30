@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public GameObject firstScreenUI, lastScreenUI, lastScreenAssetsNoShoe ,sidePanel;
     public GameObject mainCanvas, cameraCanvas;
     public GameObject designAgainFromShareScreen;
+    public GameObject tutorialPaintScreen;
     public RawImage videoBG;
 
     public Transform shoeGO;
