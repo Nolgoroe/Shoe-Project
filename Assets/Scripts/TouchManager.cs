@@ -118,7 +118,7 @@ public class TouchManager : MonoBehaviour
                 DisconnectPaint3DTouches();
             }
 
-            if (Input.touchCount > 0)
+            if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
             {
                 if (AnimationManager.isFinishedAnimation)
                 {
