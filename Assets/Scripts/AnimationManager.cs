@@ -244,7 +244,7 @@ public class AnimationManager : MonoBehaviour
         TouchManager.isInGame = false;
         isInfoOpen = true;
         EnableLanguageButtons();
-        Timer.Instance.timerIsRunning = false;
+        Timer.Instance.timerToPaintIsRunning = false;
 
         for (int i = 0; i < fadeObjectsInfoPressed.Length; i++)
         {
@@ -284,18 +284,18 @@ public class AnimationManager : MonoBehaviour
         {
             MoveScreenState(false);
 
-            if (ReadFolderData.Instance.languageVideoClipsURL[UIManager.Instance.clickedIndexByInfo] != null)
-            {
-                UIManager.Instance.playerOfVideos.url = ReadFolderData.Instance.languageVideoClipsURL[UIManager.Instance.clickedIndexByInfo];
-                UIManager.Instance.playerOfVideos.Play();
-            }
-            else
-            {
-                UIManager.Instance.playerOfVideos.url = ReadFolderData.Instance.languageVideoClipsURL[0];
-                UIManager.Instance.playerOfVideos.Play();
+            //if (ReadFolderData.Instance.languageVideoClipsURL[UIManager.Instance.clickedIndexByInfo] != null)
+            //{
+            //    UIManager.Instance.playerOfVideos.url = ReadFolderData.Instance.languageVideoClipsURL[UIManager.Instance.clickedIndexByInfo];
+            //    UIManager.Instance.playerOfVideos.Play();
+            //}
+            //else
+            //{
+            //    UIManager.Instance.playerOfVideos.url = ReadFolderData.Instance.languageVideoClipsURL[0];
+            //    UIManager.Instance.playerOfVideos.Play();
 
-                Debug.Log("Backup Video");
-            }
+            //    Debug.Log("Backup Video");
+            //}
 
             for (int i = 0; i < fadeObjectsInfoClosed.Length; i++)
             {
@@ -414,7 +414,7 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            Timer.Instance.timerIsRunning = false;
+            Timer.Instance.timerToPaintIsRunning = false;
 
             for (int i = 0; i < fadeObjectsMovieClosed.Length; i++)
             {
@@ -500,7 +500,7 @@ public class AnimationManager : MonoBehaviour
 
         if (TouchManager.isInGame)
         {
-            Timer.Instance.timerIsRunning = true;
+            Timer.Instance.timerToPaintIsRunning = true;
         }
     }
 
@@ -547,7 +547,7 @@ public class AnimationManager : MonoBehaviour
         {
             if (objectsToAnimate3rd[i].isDisableOnTouch)
             {
-                UIManager.Instance.disableOnTOuch.Add(objectsToAnimate3rd[i].theObject);
+                UIManager.Instance.disableOnTouch.Add(objectsToAnimate3rd[i].theObject);
             }
             objectsToAnimate3rd[i].theObject.transform.DOLocalMove(objectsToAnimate3rd[i].newPos, objectsToAnimate3rd[i].timeToAnimate).SetEase(Ease.OutCirc);
             yield return new WaitForSeconds(objectsToAnimate3rd[i].delatToActivate);
@@ -580,8 +580,7 @@ public class AnimationManager : MonoBehaviour
     public IEnumerator AnimateLastScreenShoeScreenShot()
     {
 
-        TouchManager.isInGame = false;
-        UIManager.Instance.isLastScreen = true;
+        //TouchManager.isInGame = false;
 
         shoeToAnimateLast.theObject.transform.DOLocalMove(shoeToAnimateLast.newPos, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCirc);
         shoeToAnimateLast.theObject.transform.DORotate(shoeToAnimateLast.newRotation, shoeToAnimateLast.timeToAnimate).SetEase(Ease.OutCubic);
@@ -607,6 +606,9 @@ public class AnimationManager : MonoBehaviour
             objectToAnimateLast[i].theObject.transform.DOScale(objectToAnimateLast[i].newScale, objectToAnimateLast[i].timeToAnimate).SetEase(Ease.OutCirc);
             yield return new WaitForSeconds(objectToAnimateLast[i].delatToActivate);
         }
+
+        UIManager.Instance.isLastScreen = true;
+
         yield return null;
     }
 
@@ -617,6 +619,7 @@ public class AnimationManager : MonoBehaviour
         //shoeToAnimateLast.theObject.transform.DOLocalMove(postitionForSharing, 0.8f).SetEase(Ease.OutCirc);
         //shoeToAnimateLast.theObject.transform.DORotate(Vector3.zero, 0.8f).SetEase(Ease.OutCubic);
         TouchManager.isSharingScreen = true;
+        UIManager.Instance.isLastScreen = false;
         StartCoroutine(UIManager.Instance.TakeScreenShot());
     }
 }

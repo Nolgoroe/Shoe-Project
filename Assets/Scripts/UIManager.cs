@@ -35,7 +35,7 @@ public class UIManager : MonoBehaviour
     public Sprite[] whiteLetters, blackLetters;
 
 
-    [HideInInspector]
+    
     public bool isLastScreen;
 
     public string screenshotSaveFolderPath;
@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
 
     public List<UIElementLanguageData> UiLanguages;
 
-    public List<GameObject> disableOnTOuch;
+    public List<GameObject> disableOnTouch;
 
     [HideInInspector]
     public bool savedImage;
@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
         sidePanel.SetActive(true);
         videoBG.raycastTarget = false;
         designAgainFromShareScreen.SetActive(false);
-        disableOnTOuch = new List<GameObject>();
+        disableOnTouch = new List<GameObject>();
     }
 
     //private void Update()
@@ -96,7 +96,7 @@ public class UIManager : MonoBehaviour
     public void GoToGame()
     {
         TouchManager.isInGame = true;
-        Timer.Instance.timerIsRunning = true;
+        Timer.Instance.timerToPaintIsRunning = true;
 
         ColorPickerSimple.Instacne.colorPickedFrontImage.color = PainterManager.Instacne.painter.Color;
         ColorPickerSimple.Instacne.gradMaterial.SetColor("_Color", ColorPickerSimple.Instacne.colorPickedFrontImage.color);

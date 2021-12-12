@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
 {
     public static Timer Instance;
     public float timeToPaint = 10;
-    public bool timerIsRunning = false;
+    public bool timerToPaintIsRunning = false;
     public Text timeText;
 
     //public float timeToResetLastScreen = 5f;
@@ -19,44 +19,24 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        if (timerIsRunning)
+        if (!UIManager.Instance.isLastScreen && UIManager.Instance.disableOnTouch.Count <= 0)
         {
-            if (timeToPaint > 0)
+            if (timerToPaintIsRunning)
             {
-                timeToPaint -= Time.deltaTime;
-                DisplayTime(timeToPaint);
+                if (timeToPaint > 0)
+                {
+                    timeToPaint -= Time.deltaTime;
+                    DisplayTime(timeToPaint);
+                }
+                else
+                {
+                    Debug.Log("Time has run out!");
+                    timeToPaint = 0;
+                    timerToPaintIsRunning = false;
+                    //StartCoroutine(UIManager.Instance.GoLastScreen());
+                    StartCoroutine(AnimationManager.Instance.AnimateThirdToLast());
+                }
             }
-            else
-            {
-                Debug.Log("Time has run out!");
-                timeToPaint = 0;
-                timerIsRunning = false;
-                //StartCoroutine(UIManager.Instance.GoLastScreen());
-                StartCoroutine(AnimationManager.Instance.AnimateThirdToLast());
-            }
-        }
-
-        if (UIManager.Instance.isLastScreen)
-        {
-            //if (AnimationManager.Instance.isOutOfGame)
-            //{
-            //    return;
-            //}
-            //if (!TouchManager.isInGame)
-            //{
-            //    return;
-            //}
-            //else
-            //{
-            //    if (timeToResetLastScreen > 0)
-            //    {
-            //        timeToResetLastScreen -= Time.deltaTime;
-            //    }
-            //    else
-            //    {
-            //        SceneManager.LoadScene(0);
-            //    }
-            //}
         }
     }
 

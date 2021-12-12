@@ -313,19 +313,23 @@ public class TouchManager : MonoBehaviour
                     {
                         float deltaX = touchOne.deltaPosition.x;
                         float deltaY = touchOne.deltaPosition.y;
-                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationY = deltaX * Time.deltaTime * rotationSpeedModifier;
                         ShoeRotationZ -= deltaY * Time.deltaTime * rotationSpeedModifier;
-                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
                     }
                     else
                     {
                         float deltaX = touchOne.deltaPosition.x;
                         float deltaY = touchOne.deltaPosition.y;
-                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                        ShoeRotationY = deltaX * Time.deltaTime * rotationSpeedModifier;
                         ShoeRotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
-                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
                     }
-                    toRotate.transform.eulerAngles = new Vector3(0, ShoeRotationY, ShoeRotationZ);
+
+                    float rotateY = toRotate.transform.eulerAngles.y - ShoeRotationY;
+
+                    ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
+
+                    toRotate.transform.eulerAngles = new Vector3(0, rotateY, ShoeRotationZ);
+                    //toRotate.transform.rotation = Quaternion.Euler(new Vector3(0, rotateY, rotateZ));
                 }
             }
         }
@@ -334,31 +338,46 @@ public class TouchManager : MonoBehaviour
         {
             if (Input.touchCount >= 2)
             {
-                Touch touchOne = Input.GetTouch(0);
-                Touch touchTwo = Input.GetTouch(1);
-
-                if (touchOne.phase == TouchPhase.Moved)
-                {
-                    if (toRotate.transform.eulerAngles.y < 320 && toRotate.transform.eulerAngles.y > 230)
-                    {
-                        float deltaX = touchOne.deltaPosition.x;
-                        float deltaY = touchOne.deltaPosition.y;
-                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
-                        ShoeRotationZ -= deltaY * Time.deltaTime * rotationSpeedModifier;
-                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
-                    }
-                    else
-                    {
-                        float deltaX = touchOne.deltaPosition.x;
-                        float deltaY = touchOne.deltaPosition.y;
-                        ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
-                        ShoeRotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
-                        ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
-                    }
-                    toRotate.transform.eulerAngles = new Vector3(0, ShoeRotationY, ShoeRotationZ);
-                }
+                RotateSpecificScreen();
             }
         }
+
+        if (UIManager.Instance.isLastScreen && UIManager.Instance.disableOnTouch.Count <= 0)
+        {
+            if (Input.touchCount >= 2)
+            {
+                UIManager.Instance.lastScreenAssetsNoShoe.SetActive(false);
+                UIManager.Instance.designAgainFromShareScreen.SetActive(true);
+                RotateSpecificScreen();
+            }
+        }
+    }
+
+    public void RotateSpecificScreen()
+    {
+            Touch touchOne = Input.GetTouch(0);
+            Touch touchTwo = Input.GetTouch(1);
+
+            if (touchOne.phase == TouchPhase.Moved)
+            {
+                if (toRotate.transform.eulerAngles.y < 320 && toRotate.transform.eulerAngles.y > 230)
+                {
+                    float deltaX = touchOne.deltaPosition.x;
+                    float deltaY = touchOne.deltaPosition.y;
+                    ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                    ShoeRotationZ -= deltaY * Time.deltaTime * rotationSpeedModifier;
+                    ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
+                }
+                else
+                {
+                    float deltaX = touchOne.deltaPosition.x;
+                    float deltaY = touchOne.deltaPosition.y;
+                    ShoeRotationY -= deltaX * Time.deltaTime * rotationSpeedModifier;
+                    ShoeRotationZ += deltaY * Time.deltaTime * rotationSpeedModifier;
+                    ShoeRotationZ = Mathf.Clamp(ShoeRotationZ, -13, 13);
+                }
+                toRotate.transform.eulerAngles = new Vector3(0, ShoeRotationY, ShoeRotationZ);
+            }
     }
 
     public void SetShoeRotation(float rotationY, float rotationZ)
@@ -545,12 +564,12 @@ public class TouchManager : MonoBehaviour
 
     private void DeactivateObjectsOnScreenTouch()
     {
-        foreach (GameObject go in UIManager.Instance.disableOnTOuch)
+        foreach (GameObject go in UIManager.Instance.disableOnTouch)
         {
             go.SetActive(false);
         }
 
-        UIManager.Instance.disableOnTOuch.Clear();
+        UIManager.Instance.disableOnTouch.Clear();
     }
 }
 
