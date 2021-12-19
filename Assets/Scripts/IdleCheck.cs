@@ -28,5 +28,11 @@ public class IdleCheck : MonoBehaviour
         {
             idleTime = 0;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            idleTime = 0;
+        }
+
     }
 }

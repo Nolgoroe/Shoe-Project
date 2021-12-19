@@ -199,24 +199,27 @@ public class UIManager : MonoBehaviour
         foreach (Image i in videoButtons)
         {
             LanguageButtonInfo childLetterImageData = i.transform.GetComponent<LanguageButtonInfo>();
-            Image childLetterImage = i.transform.GetChild(0).GetComponent<Image>();
+            Text childLetterImage = i.transform.GetChild(0).GetComponent<Text>();
 
             if (i != videoButtons[index])
             {
                 if (AnimationManager.Instance.isVideoOpen)
                 {
                     i.color = Color.white;
-                    childLetterImage.sprite = childLetterImageData.blackImage;
+                    childLetterImage.color = Color.black;
+                    //childLetterImage.sprite = childLetterImageData.blackImage;
                 }
                 else
                 {
                     i.color = new Color(255, 255, 255, 0);
-                    childLetterImage.sprite = childLetterImageData.blackImage;
+                    childLetterImage.color = Color.black;
+                    //childLetterImage.sprite = childLetterImageData.blackImage;
                 }
             }
             else
             {
-                childLetterImage.sprite = childLetterImageData.whiteImage;
+                //childLetterImage.sprite = childLetterImageData.whiteImage;
+                childLetterImage.color = Color.white;
             }
         }
     }

@@ -28,6 +28,7 @@ public class FadeAnimatedObjects
 {
     public Image theObject;
     public RawImage theObjectRAW;
+    public Text theObjectText;
     public float origingalAlpha = 0;
     public float targetAlpha = 1;
     public float timeToAnimate = 1;
@@ -164,9 +165,13 @@ public class AnimationManager : MonoBehaviour
                 {
                     fadeObjectsMovieClosed[i].theObject.color = new Color(fadeObjectsMovieClosed[i].theObject.color.r, fadeObjectsMovieClosed[i].theObject.color.g, fadeObjectsMovieClosed[i].theObject.color.b, 0);
                 }
-                else
+                else if(fadeObjectsMovieClosed[i].theObjectRAW)
                 {
                     fadeObjectsMovieClosed[i].theObjectRAW.color = new Color(fadeObjectsMovieClosed[i].theObjectRAW.color.r, fadeObjectsMovieClosed[i].theObjectRAW.color.g, fadeObjectsMovieClosed[i].theObjectRAW.color.b, 0);
+                }
+                else
+                {
+                    fadeObjectsMovieClosed[i].theObjectText.color = new Color(fadeObjectsMovieClosed[i].theObjectText.color.r, fadeObjectsMovieClosed[i].theObjectText.color.g, fadeObjectsMovieClosed[i].theObjectText.color.b, 0);
                 }
             }
             else
@@ -284,19 +289,6 @@ public class AnimationManager : MonoBehaviour
         {
             MoveScreenState(false);
 
-            //if (ReadFolderData.Instance.languageVideoClipsURL[UIManager.Instance.clickedIndexByInfo] != null)
-            //{
-            //    UIManager.Instance.playerOfVideos.url = ReadFolderData.Instance.languageVideoClipsURL[UIManager.Instance.clickedIndexByInfo];
-            //    UIManager.Instance.playerOfVideos.Play();
-            //}
-            //else
-            //{
-            //    UIManager.Instance.playerOfVideos.url = ReadFolderData.Instance.languageVideoClipsURL[0];
-            //    UIManager.Instance.playerOfVideos.Play();
-
-            //    Debug.Log("Backup Video");
-            //}
-
             for (int i = 0; i < fadeObjectsInfoClosed.Length; i++)
             {
                 if (fadeObjectsInfoClosed[i].theObject)
@@ -340,9 +332,13 @@ public class AnimationManager : MonoBehaviour
             {
                 fadeObjectsMovieClosed[i].theObject.DOFade(fadeObjectsMovieClosed[i].origingalAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
             }
-            else
+            else if(fadeObjectsMovieClosed[i].theObjectRAW)
             {
                 fadeObjectsMovieClosed[i].theObjectRAW.DOFade(fadeObjectsMovieClosed[i].origingalAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
+            }
+            else
+            {
+                fadeObjectsMovieClosed[i].theObjectText.DOFade(fadeObjectsMovieClosed[i].origingalAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
             }
         }
     }
@@ -361,19 +357,8 @@ public class AnimationManager : MonoBehaviour
 
     public void ChangeVideoLanguage(int index)
     {
-        //isOutOfGame = true;
         TouchManager.isInGame = false;
         UIManager.Instance.videoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
-
-        //if (isInfoOpen)
-        //{
-        //    UIManager.Instance.infoButtons[index].color = ReadFolderData.Instance.translatedColorCode;
-        //}
-        //else
-        //{
-        //    UIManager.Instance.infoButtons[index].color = new Color(ReadFolderData.Instance.translatedColorCode.r, ReadFolderData.Instance.translatedColorCode.g, ReadFolderData.Instance.translatedColorCode.b, 0);
-        //}
-
 
         UIManager.Instance.ChangeLanguageColorsVideo(index);
 
@@ -400,15 +385,20 @@ public class AnimationManager : MonoBehaviour
             isVideoOpen = true;
 
             EnableLanguageButtons();
+
             for (int i = 0; i < fadeObjectsMovieClosed.Length; i++)
             {
                 if (fadeObjectsMovieClosed[i].theObject)
                 {
                     fadeObjectsMovieClosed[i].theObject.DOFade(fadeObjectsMovieClosed[i].targetAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
                 }
-                else
+                else if(fadeObjectsMovieClosed[i].theObjectRAW)
                 {
                     fadeObjectsMovieClosed[i].theObjectRAW.DOFade(fadeObjectsMovieClosed[i].targetAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
+                }
+                else
+                {
+                    fadeObjectsMovieClosed[i].theObjectText.DOFade(fadeObjectsMovieClosed[i].targetAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
                 }
             }
         }
@@ -422,9 +412,13 @@ public class AnimationManager : MonoBehaviour
                 {
                     fadeObjectsMovieClosed[i].theObject.DOFade(fadeObjectsMovieClosed[i].origingalAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
                 }
-                else
+                else if(fadeObjectsMovieClosed[i].theObjectRAW)
                 {
                     fadeObjectsMovieClosed[i].theObjectRAW.DOFade(fadeObjectsMovieClosed[i].origingalAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
+                }
+                else
+                {
+                    fadeObjectsMovieClosed[i].theObjectText.DOFade(fadeObjectsMovieClosed[i].origingalAlpha, fadeObjectsMovieClosed[i].timeToAnimate);
                 }
             }
             CloseInfoBar();
@@ -480,9 +474,13 @@ public class AnimationManager : MonoBehaviour
             {
                 fadeObjectsMovieClosed[i].theObject.DOFade(0, fadeObjectsMovieClosed[i].timeToAnimate);
             }
-            else
+            else if(fadeObjectsMovieClosed[i].theObjectRAW)
             {
                 fadeObjectsMovieClosed[i].theObjectRAW.DOFade(0, fadeObjectsMovieClosed[i].timeToAnimate);
+            }
+            else
+            {
+                fadeObjectsMovieClosed[i].theObjectText.DOFade(0, fadeObjectsMovieClosed[i].timeToAnimate);
             }
         }
 
